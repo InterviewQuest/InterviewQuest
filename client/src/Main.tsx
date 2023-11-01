@@ -17,33 +17,10 @@ import {
   Paragraph,
   Text,
 } from 'grommet';
+// import Tileimport TileGrid from './components/00.TileGrid';
 import TileGrid from './components/00.TileGrid';
 
-const theme = {
-  global: {
-    colors: {
-      base: '#073B4C',
-      highlight: '#118AB2',
-      approve: '#06D6A0',
-      warn: '#FFD166',
-      danger: '#EF476F',
-      gray0: 'F8F9FA',
-      gray1: 'E9ECEF',
-      gray2: '#DEE2E6',
-      gray3: '#CED4DA',
-      gray4: '#ADB5BD',
-      gray5: '#6C757D',
-      gray6: '#495057',
-      gray7: '#343A40',
-      gray8: '#212529',
-    },
-    font: {
-      family: 'Roboto',
-      size: '18px',
-      height: '20px',
-    },
-  },
-};
+// const theme = {};
 
 const techTileTitles = [
   'http2',
@@ -77,23 +54,23 @@ const AppBar = (props: { children?: React.ReactNode }) => {
 
 const Main: React.FC = () => {
   return (
-    <Grommet
-      theme={theme}
-      full
-    >
-      <Page>
-        <AppBar>
-          <Text size="large">Interview Quest</Text>
-        </AppBar>
-        <PageContent>
-          <PageHeader title="Welcome to Interview Quest!" />
-          <TileGrid
-            techTileTitles={techTileTitles}
-            color="gray4"
-          />
-        </PageContent>
-      </Page>
-    </Grommet>
+    // <Grommet
+    //   theme={theme}
+    //   full
+    // >
+    <Page>
+      <AppBar>
+        <Text size="large">Interview Quest</Text>
+      </AppBar>
+      <PageContent>
+        <PageHeader title="Welcome to Interview Quest!" />
+        <TileGrid
+          techTileTitles={techTileTitles}
+          color="gray4"
+        />
+      </PageContent>
+    </Page>
+    // </Grommet>
   );
 };
 
