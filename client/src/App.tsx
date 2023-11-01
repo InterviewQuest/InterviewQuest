@@ -17,17 +17,25 @@ import {
   Paragraph,
   Text,
 } from 'grommet';
-import TileGrid from './components/TileGrid';
-import CardGrid from './components/CardGrid';
+import TileGrid from './components/00.TileGrid';
 
 const theme = {
   global: {
     colors: {
-      primary: '#007ECC',
-      secondary: '#F3704B',
-      accent: '#99E9FF',
-      highlight: '#E1DFEB',
-      shadow: '#686770',
+      base: '#073B4C',
+      highlight: '#118AB2',
+      approve: '#06D6A0',
+      warn: '#FFD166',
+      danger: '#EF476F',
+      gray0: 'F8F9FA',
+      gray1: 'E9ECEF',
+      gray2: '#DEE2E6',
+      gray3: '#CED4DA',
+      gray4: '#ADB5BD',
+      gray5: '#6C757D',
+      gray6: '#495057',
+      gray7: '#343A40',
+      gray8: '#212529',
     },
     font: {
       family: 'Roboto',
@@ -59,7 +67,7 @@ const techTileTitles = [
 const AppBar = (props: { children?: React.ReactNode }) => {
   return (
     <Header
-      background="primary"
+      background="highlight"
       pad={{ left: 'medium', right: 'small', vertical: 'small' }}
       elevation="medium"
       {...props}
@@ -81,7 +89,7 @@ const App: React.FC = () => {
           <PageHeader title="Welcome to Interview Quest!" />
           <TileGrid
             techTileTitles={techTileTitles}
-            color="primary"
+            color="gray4"
           />
         </PageContent>
       </Page>

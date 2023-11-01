@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { Box, Text } from 'grommet';
-import TechTileModal from './TechTileModal';
+import TechTileModal from './02.TechTileModal';
 
 interface TechTileProps {
   title: string;
@@ -19,12 +19,12 @@ const TechTile: FC<TechTileProps> = ({ title, color }) => {
         align="center"
         justify="center"
         pad="medium"
-        border={{ color: 'shadow', size: 'medium' }}
+        border={{ color: 'gray8', size: 'small' }}
         round="medium"
         background={color}
         onClick={openModal}
         as="button"
-        hoverIndicator="secondary"
+        hoverIndicator="highlight"
       >
         <Text>{title}</Text>
       </Box>

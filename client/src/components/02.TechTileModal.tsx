@@ -16,13 +16,8 @@ const TechTileModal: FC<ModalProps> = ({ onClose, title }) => {
         pad="medium"
         width="large"
         height="large"
-        background={{ color: 'highlight', opacity: 'weak' }}
-        // border={{
-        //   color: 'shadow',
-        //   size: 'large',
-        //   side: 'all',
-        // }}
-        // round="small"
+        background={{ color: 'gray0', opacity: 'medium', size: 'cover' }}
+        responsive={true}
       >
         <Text>{`This is the modal content for ${title}`}</Text>
         <TextArea

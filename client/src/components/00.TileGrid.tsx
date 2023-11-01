@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { Grid } from 'grommet';
-import TechTile from './TechTile';
-import TechCard from './TechCard';
+import TechTile from './01.TechTile';
 
 interface TileGridProps {
   techTileTitles: string[];
@@ -11,12 +10,11 @@ interface TileGridProps {
 const TileGrid: React.FC<TileGridProps> = ({ techTileTitles, color }) => {
   return (
     <Grid
-      pad="large"
-      columns={[['medium', 'large']]}
-      justifyContent="center"
+      columns={{ count: 6, size: 'auto' }}
+      gap="small"
     >
       {techTileTitles.map((title, index) => (
-        <TechCard
+        <TechTile
           key={index}
           title={title}
           color={color}
