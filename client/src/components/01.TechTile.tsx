@@ -25,8 +25,14 @@ const TechTile: FC<TechTileProps> = ({ title, color }) => {
         onClick={openModal}
         as="button"
         hoverIndicator="highlight"
+        width="7vw"
+        height="7vw"
       >
-        <Text>{title}</Text>
+        <Text
+          style={{ fontSize: 'clamp(10px, 4vw, 16px)', overflow: 'hidden' }}
+        >
+          {title}
+        </Text>
       </Box>
       {showModal && (
         <TechTileModal

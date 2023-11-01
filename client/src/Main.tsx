@@ -75,7 +75,7 @@ const AppBar = (props: { children?: React.ReactNode }) => {
   );
 };
 
-const App: React.FC = () => {
+const Main: React.FC = () => {
   return (
     <Grommet
       theme={theme}
@@ -97,4 +97,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default Main;

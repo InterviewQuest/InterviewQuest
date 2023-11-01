@@ -7,12 +7,9 @@ import { addOneToCount } from './slices/mainSlice'; //actions
 import { Routes, Route, Link } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
 import Dashboard from './components/dashboard';
-import App from './App';
+import Main from './Main';
 
 export default function App() {
-  const dispatch = useDispatch();
-  const { count } = useSelector((state) => state.main);
-
   return (
     //login route
     //dashboard route
@@ -24,7 +21,7 @@ export default function App() {
         {/* <Route path='/dashboard' element={<Dashboard/>}/> */}
         <Route
           path="/"
-          element={<Dashboard />}
+          element={<App />}
         />
       </Routes>
     </div>
@@ -35,7 +32,7 @@ const root = createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <Main />
     </BrowserRouter>
   </Provider>
 );
