@@ -42,7 +42,7 @@ module.exports = {
     historyApiFallback: true,
     proxy: {
       '/': 'http://localhost:3000',
-    },
+  },
   },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
