@@ -29,10 +29,13 @@ module.exports = {
   ],
   devServer: {
     static: path.join(__dirname, 'client'),
-    port: 3000,
+    port: 8080,
     open: true,
     hot: true,
-    historyApiFallback: true
+    historyApiFallback: true,
+    proxy: {
+      '/': 'http://localhost:3000',
+  },
   },
   resolve: {
     extensions: ['.js', '.jsx']
