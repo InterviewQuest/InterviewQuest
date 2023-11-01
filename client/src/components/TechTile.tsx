@@ -20,10 +20,11 @@ const TechTile: FC<TechTileProps> = ({ title, color }) => {
         justify="center"
         pad="medium"
         border={{ color: 'shadow', size: 'medium' }}
-        round="small"
+        round="medium"
         background={color}
         onClick={openModal}
         as="button"
+        hoverIndicator="secondary"
       >
         <Text>{title}</Text>
       </Box>

@@ -18,6 +18,7 @@ import {
   Text,
 } from 'grommet';
 import TileGrid from './components/TileGrid';
+import CardGrid from './components/CardGrid';
 
 const theme = {
   global: {
@@ -80,7 +81,7 @@ const App: React.FC = () => {
           <PageHeader title="Welcome to Interview Quest!" />
           <TileGrid
             techTileTitles={techTileTitles}
-            color="highlight"
+            color="primary"
           />
         </PageContent>
       </Page>

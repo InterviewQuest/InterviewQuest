@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Layer, Box, Button, Text } from 'grommet';
+import { Layer, Box, Button, Text, TextInput, TextArea } from 'grommet';
 
 interface ModalProps {
   onClose: () => void;
@@ -16,8 +16,20 @@ const TechTileModal: FC<ModalProps> = ({ onClose, title }) => {
         pad="medium"
         width="large"
         height="large"
+        background={{ color: 'highlight', opacity: 'weak' }}
+        // border={{
+        //   color: 'shadow',
+        //   size: 'large',
+        //   side: 'all',
+        // }}
+        // round="small"
       >
         <Text>{`This is the modal content for ${title}`}</Text>
+        <TextArea
+          size="small"
+          focusIndicator={true}
+          placeholder="Type something..."
+        />
         <Button
           label="Close"
           onClick={onClose}
