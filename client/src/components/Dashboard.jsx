@@ -53,19 +53,7 @@ const Dashboard = () => {
   const [popUpStatus, setPopUpStatus] = useState('true');
 
   const linkToLeetCode = () => {
-
     window.open(url, `_blank`);
-
-
-
-  const leetCodeVisualNavigation = () => {
-    window.open(url, '_blank');
-    navigate('/leetcode');
-  };
-
-  const technologyNavigation = () => {
-    navigate('/main');
-
   };
 
   const leetCodeVisualNavigation = () => {
@@ -78,7 +66,6 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-
     fetch('/algo/getAlgo', {
       method: 'POST',
       headers: {
@@ -94,19 +81,10 @@ const Dashboard = () => {
       .then((res) => {
         setCompletedLeetCode(res.completed);
         setTotalLeetCode(res.total);
-
       })
-        .then((res) => {
-          return res.json();
-        })
-        .then((res) => {
-          setCompletedLeetCode(res.completed);
-          setTotalLeetCode(res.total);
-        })
-        .catch((err) => {
-          console.log('fetch algo err', err);
-        });
-    }
+      .catch((err) => {
+        console.log('fetch algo err', err);
+      });
   }, []);
 
   useEffect(() => {
@@ -193,7 +171,6 @@ const Dashboard = () => {
           </Text>
         )}
 
-
         <Heading margin="medium">Dashboard</Heading>
         <Box
           direction="row"
@@ -225,7 +202,6 @@ const Dashboard = () => {
             />
           </Box>
         </Box>
-
       </PageContent>
     </Page>
   );
