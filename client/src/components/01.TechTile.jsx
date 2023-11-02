@@ -5,9 +5,14 @@ import TechTileModal from './02.TechTileModal';
 const TechTile = ({ title, color, textStyle }) => {
   const size = useContext(ResponsiveContext);
   const [showModal, setShowModal] = useState(false);
+  //* ! State variables for each Text Area
+  const [proText, setProText] = useState('');
+  const [conText, setConText] = useState('');
+  const [opinionText, setOpinionText] = useState('');
 
   const openModal = () => setShowModal(true);
   const closeModal = () => {
+    console.log(proText);
     setShowModal(false);
   };
 
@@ -50,6 +55,12 @@ const TechTile = ({ title, color, textStyle }) => {
         <TechTileModal
           onClose={closeModal}
           title={title}
+          proText={proText}
+          setProText={setProText}
+          conText={conText}
+          setConText={setConText}
+          opinionText={opinionText}
+          setOpinionText={setOpinionText}
         />
       )}
     </>

@@ -13,12 +13,16 @@ import {
 import { Grommet } from 'grommet';
 import theme from './styles/theme.js';
 
-const TechTileModal = ({ onClose, title }) => {
-  //* ! State variables for each Text Area
-  const [proText, setProText] = useState('');
-  const [conText, setConText] = useState('');
-  const [opinionText, setOpinionText] = useState('');
-
+const TechTileModal = ({
+  onClose,
+  title,
+  setProText,
+  setConText,
+  setOpinionText,
+  proText,
+  conText,
+  opinionText,
+}) => {
   return (
     <Grommet theme={theme}>
       <Layer // Modal Layer
