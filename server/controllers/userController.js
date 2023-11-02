@@ -153,6 +153,7 @@ const forgetPassword = async (req, res) => {
 };
 
 module.exports = {
-  addUser,
-  forgetPassword,
+    addUser,
+    login,
+    forgetPassword,
 };

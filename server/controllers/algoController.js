@@ -40,4 +40,6 @@ const getAlgo = async (req, res) => {
 
 module.exports = {
   addAlgo,
+  addAlgo,
+  getAlgo,
 };
