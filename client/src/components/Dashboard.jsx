@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {} from '../slices/mainSlice';
 import { Help } from 'grommet-icons';
+import { MultipleValues } from './MultipleValues'; // Adjust the path as needed
+import { useNavigate } from 'react-router-dom';
 
 import {
   Box,
@@ -36,11 +38,13 @@ const AppBar = (props) => {
 };
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { problemOfTheDayObj, hasQuestionBeenSent } = useSelector(
+  const { problemOfTheDayObj, hasQuestionBeenSent, userSummary } = useSelector(
     (state) => state.main
   );
   const { algorithm, difficulty, url } = problemOfTheDayObj;
+  const { algorithms, technologies } = userSummary;
 
   const [completedLeetCode, setCompletedLeetCode] = useState('');
   const [totalLeetCode, setTotalLeetCode] = useState('');
@@ -48,53 +52,67 @@ const Dashboard = () => {
   const [totalTechnology, setTotalTechnology] = useState('');
   const [popUpStatus, setPopUpStatus] = useState('true');
 
-
   const linkToLeetCode = () => {
     window.open(url, `_blank`);
   };
 
+  const leetCodeVisualNavigation = () => {
+    window.open(url, '_blank');
+    navigate('/leetcode')
+  };
+
+  const technologyNavigation = () => {
+    navigate('/main');
+  };
+
   useEffect(() => {
+    if (algorithms && algorithms.length > 0){
+
     fetch('/algo/getAlgo', {
-      method: 'GET',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({
+        user_id: algorithms[0].user_id,
+      }),
     })
       .then((res) => {
         return res.json();
       })
       .then((res) => {
-        return res.json();
-      })
-      .then((res) => {
-        console.log('this is response', res);
-        console.log('this is response', res);
         setCompletedLeetCode(res.completed);
         setTotalLeetCode(res.total);
       })
       .catch((err) => {
         console.log('fetch algo err', err);
       });
+      }
   }, []);
 
   useEffect(() => {
+    if (technologies && technologies.length > 0){
+
     fetch('/tech/getTech', {
-      method: 'GET',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({
+        user_id: technologies[0].user_id,
+      }),
     })
       .then((res) => {
         return res.json();
       })
       .then((res) => {
-        console.log('this is response', res);
         setCompletedTechnology(res.completed);
         setTotalTechnology(res.total);
       })
       .catch((err) => {
         console.log('fetch algo err', err);
       });
+    }
   }, []);
 
   return (
@@ -112,16 +130,16 @@ const Dashboard = () => {
             align="center"
             justify="center"
           >
-            <Text size="small"> Hello User... </Text>
+            <Text size="medium"> Hello User </Text>
           </Box>
-          <Box width="smal" />
+          <Box width="small" />
         </Box>
       </AppBar>
 
-      <PageContent>
+      <PageContent fill="horizontal">
         <Box
-          align="center"
-          justify="end"
+          fill="horizontal"
+          justify="end" // This will align the child Box to the end (right side) of this Box
         >
           {popUpStatus && hasQuestionBeenSent && (
             <Box
@@ -143,19 +161,39 @@ const Dashboard = () => {
             </Box>
           )}
         </Box>
-        {/* {completedLeetCode && (
-          <Text size="small">
-           helloooooooooo
-          </Text>
-        )} */}
-        {completedLeetCode && totalLeetCode && (
-          <Text size="small">
-            {completedLeetCode} / {totalLeetCode}
-          </Text>
-        )}
 
-        {completedLeetCode && <Text size='small'> {completedLeetCode }</Text>}
-        {totalLeetCode && <Text size='small'> {totalLeetCode}</Text>}
+        <Heading margin="medium">Dashboard</Heading>
+        <Box
+          direction="row"
+          align="center"
+          justify="center"
+          fill="horizontal"
+        >
+          <Box
+            role="button"
+            style={{ cursor: 'pointer' }}
+            onClick={leetCodeVisualNavigation}
+          >
+            <MultipleValues
+              completed={parseInt(completedLeetCode)}
+              total={parseInt(totalLeetCode)}
+              label1="Leetcode"
+              label2="Remaining LeetCode"
+            />
+          </Box>
+          <Box
+            role="button"
+            onClick={technologyNavigation}
+            style={{ cursor: 'pointer' }}
+          >
+            <MultipleValues
+              completed={parseInt(completedTechnology)}
+              total={parseInt(totalTechnology)}
+              label1="Technologies"
+              label2="Remaining Technology"
+            />
+          </Box>
+        </Box>
       </PageContent>
     </Page>
   );

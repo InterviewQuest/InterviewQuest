@@ -22,14 +22,19 @@ const addAlgo = async (req, res) => {
 };
 
 const getAlgo = async (req, res) => {
+  const { user_id } = req.body;
   try {
-    const totalAlgo = await pool.query('SELECT * FROM user_algorithms');
-    const completedAlgo = await pool.query(
-      'SELECT * FROM user_algorithms WHERE solved = true'
+    const totalAlgo = await pool.query(
+      `SELECT * FROM user_algorithms WHERE user_id = ${user_id} `
     );
-    return res
-      .status(201)
-      .json({ total: totalAlgo.rowCount, completed: completedAlgo.rowCount });
+    const completedAlgo = await pool.query(
+      `SELECT count(*) FROM user_algorithms WHERE solved = true AND user_id = ${user_id}`
+    );
+    return res.status(201).json({
+      data: totalAlgo.rows,
+      total: totalAlgo.rows.length,
+      completed: completedAlgo.rows[0].count,
+    });
   } catch (err) {
     console.log('Error adding algorithm: ', err);
     return res.status(500).send('Server Error During algoController.addAlgo');
