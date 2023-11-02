@@ -12,33 +12,33 @@ const LeetcodeLogs = () => {
     'problem',
     'interviews',
     'difficulty',
-    'comfort rating',
+    'comfort_rating',
   ];
 
   useEffect(() => {
-    if (algorithms && algorithms.length > 0){
-    fetch('/algo/getAlgo', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        user_id: algorithms[0].user_id,
-      }),
-    })
-      .then((res) => {
-        return res.json();
+    if (algorithms && algorithms.length > 0) {
+      fetch('/algo/getAlgo', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: algorithms[0].user_id,
+        }),
       })
-      .then((res) => {
-        setLeetCodeLogs(res.data);
-      })
-      .then(()=> {
-        console.log(leetcodeLogs)
-      })
-      .catch((err) => {
-        console.log('fetch algo err', err);
-      });
-      }
+        .then((res) => {
+          return res.json();
+        })
+        .then((res) => {
+          setLeetCodeLogs(res.data);
+        })
+        .then(() => {
+          console.log(leetcodeLogs);
+        })
+        .catch((err) => {
+          console.log('fetch algo err', err);
+        });
+    }
   }, []);
 
   return (
@@ -47,21 +47,21 @@ const LeetcodeLogs = () => {
         <tr>
           {columns.map((item) => (
             <th key={item}>{item}</th>
-          )}
+          ))}
         </tr>
       </thead>
       <tbody>
-        {leetcodeLogs && leetcodeLogs.map((algo) => (
-          <tr key={algo.algoritm_id}>
-            <td>
-              <div className="entry">
-                {columns.map((item) => (
-                  <td key={item}>{algo[item]}</td>
-                )}
-              </div>
-            </td>
-          </tr>
-        )}
+        {leetcodeLogs &&
+          leetcodeLogs.map((algo) => (
+            <tr key={algo.algorithm_id}>
+            <td>algo.solved</td>
+            <td>algo.last_solved</td>
+            <td>algo.problem</td>
+            <td>algo.interviews</td>
+            <td>algo.difficulty</td>
+            <td>algo.comfort_rating</td>
+            </tr>
+          ))}
       </tbody>
     </table>
   );

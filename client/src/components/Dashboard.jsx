@@ -67,7 +67,7 @@ const Dashboard = () => {
 
   const leetCodeVisualNavigation = () => {
     window.open(url, '_blank');
-    navigate('/leetcode')
+    navigate('/leetcode');
   };
 
   const technologyNavigation = () => {
@@ -75,6 +75,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
+
     fetch('/algo/getAlgo', {
       method: 'POST',
       headers: {
@@ -90,35 +91,42 @@ const Dashboard = () => {
       .then((res) => {
         setCompletedLeetCode(res.completed);
         setTotalLeetCode(res.total);
+
       })
-      .catch((err) => {
-        console.log('fetch algo err', err);
-      });
-      }
+        .then((res) => {
+          return res.json();
+        })
+        .then((res) => {
+          setCompletedLeetCode(res.completed);
+          setTotalLeetCode(res.total);
+        })
+        .catch((err) => {
+          console.log('fetch algo err', err);
+        });
+    }
   }, []);
 
   useEffect(() => {
-    if (technologies && technologies.length > 0){
-
-    fetch('/tech/getTech', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        user_id: technologies[0].user_id,
-      }),
-    })
-      .then((res) => {
-        return res.json();
+    if (technologies && technologies.length > 0) {
+      fetch('/tech/getTech', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: technologies[0].user_id,
+        }),
       })
-      .then((res) => {
-        setCompletedTechnology(res.completed);
-        setTotalTechnology(res.total);
-      })
-      .catch((err) => {
-        console.log('fetch algo err', err);
-      });
+        .then((res) => {
+          return res.json();
+        })
+        .then((res) => {
+          setCompletedTechnology(res.completed);
+          setTotalTechnology(res.total);
+        })
+        .catch((err) => {
+          console.log('fetch algo err', err);
+        });
     }
   }, []);
 
@@ -137,7 +145,7 @@ const Dashboard = () => {
             align="center"
             justify="center"
           >
-            <Text size="medium"> Hello User </Text>
+            <Text size="large"> Hello User! </Text>
           </Box>
           <Box width="small" />
         </Box>
@@ -145,7 +153,9 @@ const Dashboard = () => {
 
       <PageContent fill="horizontal">
         <Box
+          margin="medium"
           fill="horizontal"
+          direction="row"
           justify="end" // This will align the child Box to the end (right side) of this Box
         >
           {!hasQuestionBeenSent && (
@@ -155,6 +165,7 @@ const Dashboard = () => {
               tabIndex={0}
               aria-label="Go to LeetCode"
               style={{ cursor: 'pointer' }}
+              border={{ color: 'shadow', size: 'small' }}
             >
               <Notification
                 title="Default Status Title"
@@ -163,6 +174,7 @@ const Dashboard = () => {
                   event.stopPropagation();
                   dispatch(randomQuestion({ questionSent: true }));
                 }}
+                style={{ padding: '10px' }}
               />
             </Box>
           )}
@@ -178,8 +190,39 @@ const Dashboard = () => {
           </Text>
         )}
 
-        {completedLeetCode && <Text size="small"> {completedLeetCode}</Text>}
-        {totalLeetCode && <Text size="small"> {totalLeetCode}</Text>}
+
+        <Heading margin="medium">Dashboard</Heading>
+        <Box
+          direction="row"
+          align="center"
+          justify="center"
+          fill="horizontal"
+          border="shadow"
+        >
+          <Box
+            role="button"
+            onClick={leetCodeVisualNavigation}
+          >
+            <MultipleValues
+              completed={parseInt(completedLeetCode)}
+              total={parseInt(totalLeetCode)}
+              label1="Leetcode"
+              label2="Remaining LeetCode"
+            />
+          </Box>
+          <Box
+            role="button"
+            onClick={technologyNavigation}
+          >
+            <MultipleValues
+              completed={parseInt(completedTechnology)}
+              total={parseInt(totalTechnology)}
+              label1="Technologies"
+              label2="Remaining Technology"
+            />
+          </Box>
+        </Box>
+
       </PageContent>
     </Page>
   );

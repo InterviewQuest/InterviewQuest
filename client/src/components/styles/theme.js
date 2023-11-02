@@ -16,6 +16,7 @@ const colors = {
   gray6: '#495057',
   gray7: '#343A40',
   gray8: '#212529',
+offWhite: '#f5f5f5', 
 };
 
 const theme = {
