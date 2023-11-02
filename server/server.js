@@ -17,10 +17,8 @@ const PORT = process.env.PORT || 3000;
 app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(express.json());
 
-//Handle Multiple Routes to different page
-app.get('*', (req, res) => {
-  return res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
-});
+// Assuming your compiled React files are in "../client/build"
+app.use(express.static(path.resolve(__dirname, '../build')));
 
 //User routes go thru here
 app.use('/user', userRouter);
