@@ -25,8 +25,8 @@ export const MultipleValues = ({ completed, total, label1, label2 }) => {
             size="small"
             thickness="medium"
           />
-          <Box align="center">
-            <Box direction="row" align="center" pad={{ bottom: 'xsmall' }}>
+          <Box align="center" >
+            <Box direction="row" align="center" pad={{ bottom: 'xsmall' }}  >
               <Text size="xxlarge" weight="bold">
                 {completed}
               </Text>

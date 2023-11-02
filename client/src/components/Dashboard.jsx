@@ -59,8 +59,7 @@ const Dashboard = () => {
 
   const leetCodeVisualNavigation = () => {
     window.open(url, '_blank');
-     navigate('/leetcode')
-
+    navigate('/leetcode');
   };
 
   const technologyNavigation = () => {
@@ -68,52 +67,50 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    if (algorithms && algorithms.length > 0){
-
-    fetch('/algo/getAlgo', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        user_id: algorithms[0].user_id,
-      }),
-    })
-      .then((res) => {
-        return res.json();
+    if (algorithms && algorithms.length > 0) {
+      fetch('/algo/getAlgo', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: algorithms[0].user_id,
+        }),
       })
-      .then((res) => {
-        setCompletedLeetCode(res.completed);
-        setTotalLeetCode(res.total);
-      })
-      .catch((err) => {
-        console.log('fetch algo err', err);
-      });
-      }
+        .then((res) => {
+          return res.json();
+        })
+        .then((res) => {
+          setCompletedLeetCode(res.completed);
+          setTotalLeetCode(res.total);
+        })
+        .catch((err) => {
+          console.log('fetch algo err', err);
+        });
+    }
   }, []);
 
   useEffect(() => {
-    if (technologies && technologies.length > 0){
-
-    fetch('/tech/getTech', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        user_id: technologies[0].user_id,
-      }),
-    })
-      .then((res) => {
-        return res.json();
+    if (technologies && technologies.length > 0) {
+      fetch('/tech/getTech', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: technologies[0].user_id,
+        }),
       })
-      .then((res) => {
-        setCompletedTechnology(res.completed);
-        setTotalTechnology(res.total);
-      })
-      .catch((err) => {
-        console.log('fetch algo err', err);
-      });
+        .then((res) => {
+          return res.json();
+        })
+        .then((res) => {
+          setCompletedTechnology(res.completed);
+          setTotalTechnology(res.total);
+        })
+        .catch((err) => {
+          console.log('fetch algo err', err);
+        });
     }
   }, []);
 
@@ -132,7 +129,7 @@ const Dashboard = () => {
             align="center"
             justify="center"
           >
-            <Text size="medium"> Hello User </Text>
+            <Text size="large"> Hello User! </Text>
           </Box>
           <Box width="small" />
         </Box>
@@ -140,7 +137,9 @@ const Dashboard = () => {
 
       <PageContent fill="horizontal">
         <Box
+          margin="medium"
           fill="horizontal"
+          direction="row"
           justify="end" // This will align the child Box to the end (right side) of this Box
         >
           {popUpStatus && hasQuestionBeenSent && (
@@ -150,6 +149,7 @@ const Dashboard = () => {
               tabIndex={0}
               aria-label="Go to LeetCode"
               style={{ cursor: 'pointer' }}
+              border={{ color: 'shadow', size: 'small' }}
             >
               <Notification
                 title="Algorithm of the day"
@@ -159,6 +159,7 @@ const Dashboard = () => {
                   event.stopPropagation();
                   setPopUpStatus(false);
                 }}
+                style={{ padding: '10px' }}
               />
             </Box>
           )}
@@ -170,10 +171,10 @@ const Dashboard = () => {
           align="center"
           justify="center"
           fill="horizontal"
+          border="shadow"
         >
           <Box
             role="button"
-            style={{ cursor: 'pointer' }}
             onClick={leetCodeVisualNavigation}
           >
             <MultipleValues
@@ -186,7 +187,6 @@ const Dashboard = () => {
           <Box
             role="button"
             onClick={technologyNavigation}
-            style={{ cursor: 'pointer' }}
           >
             <MultipleValues
               completed={parseInt(completedTechnology)}

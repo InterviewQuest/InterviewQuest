@@ -27,7 +27,9 @@ const LeetcodeLogs = () => {
           user_id: algorithms[0].user_id,
         }),
       })
-        .then((res) => res.json())
+        .then((res) => {
+          return res.json();
+        })
         .then((res) => {
           setLeetCodeLogs(res.data);
         })

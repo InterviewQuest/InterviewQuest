@@ -74,6 +74,7 @@ const Login = () => {
         <input name='password-field' type='password' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)}></input>
         <button type='button' onClick={handleClick}>Submit</button>
         <button type='button' onClick={() => setLoginState(!loginState)}>Signup Page</button>
+        <Link to="/forgetpassword">Forgot your password?</Link>
       </div>
     )
   } else {
