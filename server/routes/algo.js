@@ -10,5 +10,4 @@ router.get('/getAlgo', algoController.getAlgo);
 router.post('/addAlgo', algoController.addAlgo);
 
 
-
 module.exports = router;

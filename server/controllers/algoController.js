@@ -22,13 +22,11 @@ const addAlgo = async (req, res) => {
 };
 
 const getAlgo = async (req, res) => {
-    console.log('this is getalgo')
   try {
-    const totalAlgo = await pool.query('SELECT * FROM algorithms');
+    const totalAlgo = await pool.query('SELECT * FROM user_algorithms');
     const completedAlgo = await pool.query(
-      'SELECT * FROM algorithms WHERE solved = true'
+      'SELECT * FROM user_algorithms WHERE solved = true'
     );
-    console.log('this is rowcount', totalAlgo.rowCount);
     return res
       .status(201)
       .json({ total: totalAlgo.rowCount, completed: completedAlgo.rowCount });
@@ -39,6 +37,6 @@ const getAlgo = async (req, res) => {
 };
 
 module.exports = {
-    addAlgo,
-    getAlgo
+  addAlgo,
+  getAlgo,
 };

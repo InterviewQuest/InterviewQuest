@@ -44,7 +44,10 @@ const Dashboard = () => {
 
   const [completedLeetCode, setCompletedLeetCode] = useState('');
   const [totalLeetCode, setTotalLeetCode] = useState('');
+  const [completedTechnology, setCompletedTechnology] = useState('');
+  const [totalTechnology, setTotalTechnology] = useState('');
   const [popUpStatus, setPopUpStatus] = useState('true');
+
 
   const linkToLeetCode = () => {
     window.open(url, `_blank`);
@@ -61,9 +64,33 @@ const Dashboard = () => {
         return res.json();
       })
       .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        console.log('this is response', res);
         console.log('this is response', res);
         setCompletedLeetCode(res.completed);
         setTotalLeetCode(res.total);
+      })
+      .catch((err) => {
+        console.log('fetch algo err', err);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch('/tech/getTech', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        console.log('this is response', res);
+        setCompletedTechnology(res.completed);
+        setTotalTechnology(res.total);
       })
       .catch((err) => {
         console.log('fetch algo err', err);
@@ -116,9 +143,19 @@ const Dashboard = () => {
             </Box>
           )}
         </Box>
+        {/* {completedLeetCode && (
+          <Text size="small">
+           helloooooooooo
+          </Text>
+        )} */}
+        {completedLeetCode && totalLeetCode && (
+          <Text size="small">
+            {completedLeetCode} / {totalLeetCode}
+          </Text>
+        )}
 
-        {completedLeetCode && <Text size="small"> {completedLeetCode}</Text>}
-        {totalLeetCode && <Text size="small"> {totalLeetCode}</Text>}
+        {completedLeetCode && <Text size='small'> {completedLeetCode }</Text>}
+        {totalLeetCode && <Text size='small'> {totalLeetCode}</Text>}
       </PageContent>
     </Page>
   );
