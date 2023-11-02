@@ -3,159 +3,160 @@ const { parse } = require('pg-connection-string');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
-<<<<<<< HEAD
-const nodemailer = require('nodemailer');
-const jwt = require('jsonwebtoken');
-=======
->>>>>>> 9a5966c (new updates)
 
 const config = parse(process.env.DATABASE_URL);
 config.ssl = {
   rejectUnauthorized: false,
-<<<<<<< HEAD
-  rejectUnauthorized: false,
-=======
->>>>>>> 9a5966c (new updates)
 };
 const pool = new Pool(config);
 
 const addUser = async (req, res) => {
   const { email, password } = req.body;
+
+  const client = await pool.connect();
+
   try {
-    const result = await pool.query(
+    await client.query('BEGIN');
+
+    const userResult = await client.query(
       'INSERT INTO users(email, password) VALUES($1, $2) RETURNING *',
       [email, password]
     );
-    res.status(201).json(result.rows[0]);
+    const newUser = userResult.rows[0];
+
+    const algorithmsResult = await client.query(
+      'SELECT id, difficulty FROM algorithms LIMIT 75'
+    );
+    const values = algorithmsResult.rows
+      .map(
+        (row) =>
+          `(${newUser.id}, ${row.id}, false, null, null, 0, '${row.difficulty}')`
+      )
+      .join(',');
+
+    await client.query(
+      `INSERT INTO user_algorithms(user_id, algorithm_id, solved, last_solved, interviews, comfort_rating, difficulty) VALUES ${values}`
+    );
+
+    const technologiesResult = await client.query(
+      'SELECT id FROM technologies LIMIT 16'
+    );
+    const techValues = technologiesResult.rows.map(
+      (row) => `(${newUser.id}, ${row.id}, false, null, null, null)`
+    );
+
+    await client.query(
+      `INSERT INTO user_technologies(user_id, technology_id, green, pros, cons, opinion) VALUES ${techValues}`
+    );
+
+    await client.query('COMMIT');
+    res.status(201).json(newUser);
   } catch (err) {
-    console.log('Error adding user: ', err);
+    await client.query('ROLLBACK');
+    console.error('Error adding user: ', err);
     res.status(500).send('Server Error During userController.addUser');
+  } finally {
+    client.release();
   }
-<<<<<<< HEAD
+};
+
+const login = async (req, res) => {
   const { email, password } = req.body;
-  try {
-    const result = await pool.query(
-      'INSERT INTO users(email, password) VALUES($1, $2) RETURNING *',
-      [email, password]
-    );
-    res.status(201).json(result.rows[0]);
-  } catch (err) {
-    console.log('Error adding user: ', err);
-    res.status(500).send('Server Error During userController.addUser');
-  }
-=======
->>>>>>> 9a5966c (new updates)
-};
+  const client = await pool.connect();
 
-const resetPassword = async (req, res) => {
-  const { email, password } = req.body; // Assuming you have a 'newPassword' field in your request body
-  try {
-    const result = await pool.query(
-      'UPDATE users SET password = $1 WHERE email = $2 RETURNING *',
-      [password, email]
-    );
-
-    if (result.rowCount === 0) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    return res.status(200).json({ message: 'Password updated successfully' });
-  } catch (err) {
-    console.error('Error updating password: ', err);
-    return res.status(500).json({ message: 'Server Error' });
-  }
-};
-
-const forgetPassword = async (req, res) => {
-  console.log('hello this is forget password');
-  const { email } = req.body;
-  console.log(req.body);
-  let message;
-  let emailExists;
-  const secretKey = crypto.randomBytes(32).toString('hex');
-  const query = 'SELECT * FROM users WHERE email = $1';
-<<<<<<< HEAD
-const resetPassword = async (req, res) => {
-  const { email, password } = req.body; // Assuming you have a 'newPassword' field in your request body
-  try {
-    const result = await pool.query(
-      'UPDATE users SET password = $1 WHERE email = $2 RETURNING *',
-      [password, email]
-    );
-
-    if (result.rowCount === 0) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    return res.status(200).json({ message: 'Password updated successfully' });
-  } catch (err) {
-    console.error('Error updating password: ', err);
-    return res.status(500).json({ message: 'Server Error' });
-  }
-};
-
-const forgetPassword = async (req, res) => {
-  console.log('hello this is forget password');
-  const { email } = req.body;
-  console.log(req.body);
-  let message;
-  let emailExists;
-  const secretKey = crypto.randomBytes(32).toString('hex');
-  const query = 'SELECT * FROM users WHERE email = $1';
-
-  await pool.query(query, (err, result) => {
-    if (results.length > 0) emailExists = true;
-    else emailExists = false;
-  });
-
-  if (emailExists === false) {
-    res.locals.message = 'Sorry, this email does not exist';
-    return res.status(200).json(res.locals.message);
+  const loginAttempt = await client.query(
+    'SELECT * FROM users WHERE email = $1 AND password = $2',
+    [email, password]
+  );
+  if (loginAttempt.rows.length === 0) {
+    return res
+      .status(401)
+      .json({ success: false, message: 'Incorrect User/Password' });
   } else {
-    //generate jwt token
-    const resetToken = jwt.sign({ email }, secretKey, { expiresIn: '1h' });
-    const resetToken = jwt.sign({ email }, secretKey, { expiresIn: '1h' });
-    //generate reset link
-    const resetLink = `http://localhost:8080/resetpassword?token=${resetToken}`;
-    const resetLink = `http://localhost:8080/resetpassword?token=${resetToken}`;
-=======
+    const userId = loginAttempt.rows[0].id;
+
+    const problemData = await client.query(
+      `
+    SELECT ua.*, a.algorithm
+    FROM user_algorithms ua
+    JOIN algorithms a ON ua.algorithm_id = a.id
+    WHERE ua.user_id = $1
+    `,
+      [userId]
+    );
+
+    const technologyData = await client.query(
+      `
+    SELECT ut.*, t.technology
+    FROM user_technologies ut
+    JOIN technologies t ON ut.technology_id = t.id
+    WHERE ut.user_id = $1
+  `,
+      [userId]
+    );
+
+    const pob = await client.query(
+      'SELECT * FROM algorithms ORDER BY RANDOM() LIMIT 1'
+    );
+
+    const responseData = {
+      success: true,
+      problemOfTheDay: pob.rows[0],
+      algorithms: problemData.rows,
+      technologies: technologyData.rows,
+    };
+
+    return res.status(200).json(responseData);
+  }
+};
+
+const resetPassword = async (req, res) => {
+  const { email, password } = req.body; // Assuming you have a 'newPassword' field in your request body
+  try {
+    const result = await pool.query(
+      'UPDATE users SET password = $1 WHERE email = $2 RETURNING *',
+      [password, email]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    return res.status(200).json({ message: 'Password updated successfully' });
+  } catch (err) {
+    console.error('Error updating password: ', err);
+    return res.status(500).json({ message: 'Server Error' });
+  }
+};
+
+const forgetPassword = async (req, res) => {
+  console.log('hello this is forget password');
+  const { email } = req.body;
+  console.log(req.body);
+  let message;
+  let emailExists;
+  const secretKey = crypto.randomBytes(32).toString('hex');
+  const query = 'SELECT * FROM users WHERE email = $1';
 
   const results = await pool.query(query, [email]);
   console.log('this is pool results', results.rowCount);
-  results.rowCount === 0 ? emailExists = false : emailExists = true;
-  console.log('this is email exists', emailExists)
+  results.rowCount === 0 ? (emailExists = false) : (emailExists = true);
+  console.log('this is email exists', emailExists);
   if (emailExists === false) {
     message = 'Sorry, this email does not exist';
-    console.log('this is message', message)
+    console.log('this is message', message);
     return res.status(200).json({ message: message, emailExists: emailExists });
   } else {
     //generate jwt token
     const resetToken = jwt.sign({ email }, secretKey, { expiresIn: '1h' });
     //generate reset link
     const resetLink = `http://localhost:8080/resetpassword?token=${resetToken}`;
->>>>>>> 9a5966c (new updates)
 
     //create config for createTransport
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       host: 'smtp.gmail.com',
       port: '587',
-<<<<<<< HEAD
-      service: 'gmail',
-      host: 'smtp.gmail.com',
-      port: '587',
-      auth: {
-        user: 'interviewquestdev', // Replace with your Gmail email
-        pass: 'woxk qymy mnnr tbep', // Replace with your Gmail password
-        user: 'interviewquestdev', // Replace with your Gmail email
-        pass: 'woxk qymy mnnr tbep', // Replace with your Gmail password
-      },
-      secureConnection: 'false',
-      secureConnection: 'false',
-      tls: {
-        ciphers: 'SSLv3',
-        ciphers: 'SSLv3',
-=======
       auth: {
         user: 'interviewquestdev', // Replace with your Gmail email
         pass: 'woxk qymy mnnr tbep', // Replace with your Gmail password
@@ -163,7 +164,6 @@ const forgetPassword = async (req, res) => {
       secureConnection: 'false',
       tls: {
         ciphers: 'SSLv3',
->>>>>>> 9a5966c (new updates)
         rejectUnauthorized: false,
       },
     });
@@ -189,13 +189,8 @@ const forgetPassword = async (req, res) => {
 };
 
 module.exports = {
-<<<<<<< HEAD
-    addUser,
-    login,
-    forgetPassword,
-=======
   addUser,
   forgetPassword,
-  resetPassword
->>>>>>> 9a5966c (new updates)
+  resetPassword,
+  login,
 };
