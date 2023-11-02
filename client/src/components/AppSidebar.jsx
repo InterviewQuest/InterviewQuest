@@ -14,14 +14,14 @@ import { Home, Notification, ChatOption } from 'grommet-icons';
 const AppSidebar = (props) => {
   return (
     <Sidebar
-      background="highlight"
+      background="shadow"
       pad={{ left: 'medium', right: 'small', vertical: 'small' }}
       elevation="medium"
       direction="column"
     >
       <Nav
         direction="column"
-        background="highlight"
+        background="shadow"
         pad="medium"
         gap="medium"
       >

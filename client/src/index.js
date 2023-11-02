@@ -9,8 +9,6 @@ import { BrowserRouter } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
 import { Grommet } from 'grommet';
 import Main from './Main';
-import { TestComponent } from './components/TestComponent';
-
 import ForgetPW from './components/forgetpw';
 import ForgetPWLandingPage from './components/forgetpwlandingpage';
 import Login from './components/Login';
@@ -18,7 +16,6 @@ import ResetPassword from './components/resetpassword';
 import LeetcodeLogs from './components/leetcodelogs';
 
 import theme from './components/styles/theme';
-
 
 export default function App() {
   return (
@@ -41,16 +38,16 @@ export default function App() {
           path="/"
           element={<Login />}
         />
-        <Route
+        {/* <Route
           path="/test"
           element={<TestComponent />}
-        />
+        /> */}
 
         <Route
           path="/forgetpassword"
           element={<ForgetPW />}
         />
-         <Route
+        <Route
           path="/resetpassword/*"
           element={<ResetPassword />}
         />
@@ -60,7 +57,7 @@ export default function App() {
           element={<ForgetPWLandingPage />}
         />
 
-<Route
+        <Route
           path="/leetcode"
           element={<LeetcodeLogs />}
         />

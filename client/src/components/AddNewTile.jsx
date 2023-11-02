@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
-import { Box, ResponsiveContext, Text, ThumbsRating } from 'grommet';
-import TechTileModal from './02.TechTileModal';
+import { Box, ResponsiveContext, Text } from 'grommet';
 import { useDispatch, useSelector } from 'react-redux';
+import TechTileModal from './02.TechTileModal';
 import { storeTileInfo } from '../slices/mainSlice.js';
 
-const TechTile = ({ title, color, textStyle }) => {
+const AddNewTile = ({ title, color, textStyle }) => {
   const dispatch = useDispatch();
   const { userSummary } = useSelector((state) => state.main);
   const size = useContext(ResponsiveContext);
@@ -14,13 +14,6 @@ const TechTile = ({ title, color, textStyle }) => {
   const [conText, setConText] = useState('');
   const [opinionText, setOpinionText] = useState('');
   const [notesText, setNotesText] = useState('');
-  const [thumbRating, setThumbRating] = useState('gray3');
-
-  const setTileColor = () => {
-    if (thumbRating === 'gray3') return 'gray3';
-    if (thumbRating) return 'green';
-    return 'red';
-  };
 
   const openModal = () => setShowModal(true);
   const closeModal = () => {
@@ -37,6 +30,19 @@ const TechTile = ({ title, color, textStyle }) => {
     dispatch(storeTileInfo(payload));
     setShowModal(false);
   };
+
+  // {
+  //   userId: Int,
+  //   technology: String,
+  //   pros: proText,
+  //   cons: conText,
+  //   opinion: opinionText,
+  //   notes: notes,
+  //   green: Boolean,
+  // }
+
+  // //Go inside
+  // const userID = userSummary.algorithms[0].userId
 
   const boxStyles =
     size === 'small'
@@ -57,15 +63,13 @@ const TechTile = ({ title, color, textStyle }) => {
         pad="small"
         border={{ color: 'shadow', size: 'medium' }}
         round="medium"
-        background={setTileColor()}
+        background={color}
         onClick={openModal}
         as="button"
         hoverIndicator="tertiary"
         style={boxStyles}
-        title={title}
       >
         <Text
-          title={title}
           style={{
             overflow: 'hidden',
             textOverflow: 'ellipsis',
@@ -74,18 +78,11 @@ const TechTile = ({ title, color, textStyle }) => {
         >
           {title}
         </Text>
-
-        <Footer>
-          <ThumbsRating
-            value={thumbRating}
-            onChange={(value) => setThumbRating(value)}
-          />
-        </Footer>
       </Box>
       {showModal && (
         <TechTileModal
           onClose={closeModal}
-          title={title}
+          title={'addNew'}
           proText={proText}
           setProText={setProText}
           conText={conText}
@@ -100,4 +97,4 @@ const TechTile = ({ title, color, textStyle }) => {
   );
 };
 
-export default TechTile;
+export default AddNewTile;

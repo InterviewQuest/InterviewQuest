@@ -9,15 +9,25 @@ import {
   Text,
   TextInput,
   TextArea,
+  StarRating,
+  ThumbsRating,
 } from 'grommet';
 import { Grommet } from 'grommet';
 import theme from './styles/theme.js';
 
-const TechTileModal = ({ onClose, title }) => {
-  //* ! State variables for each Text Area
-  const [proText, setProText] = useState('');
-  const [conText, setConText] = useState('');
-  const [opinionText, setOpinionText] = useState('');
+const TechTileModal = ({
+  onClose,
+  title: initialTileTitle,
+  setProText,
+  setConText,
+  setOpinionText,
+  setNotesText,
+  proText,
+  conText,
+  opinionText,
+  notesText,
+}) => {
+  const [tileTitle, setTileTitle] = useState(initialTileTitle || '');
 
   return (
     <Grommet theme={theme}>
@@ -31,22 +41,39 @@ const TechTileModal = ({ onClose, title }) => {
           width="large"
           height="large"
           background={{
-            color: 'gray3',
+            color: 'white',
             size: 'cover',
           }}
           responsive={true}
           round="large"
         >
-          <Header title={title}>
-            <Text // Tech Name
-              style={{
-                fontFamily: 'Roboto',
-                fontSize: '2rem',
-                fontWeight: '600',
-                color: '#073B4C',
-              }}
-              margin={{ bottom: 'small' }}
-            >{`${title}`}</Text>
+          {/* <Header title={title}> */}
+          <Header>
+            {initialTileTitle === 'addNew' ? (
+              <TextInput
+                placeholder="Enter title here..."
+                value={''}
+                onChange={(event) => setTileTitle(event.target.value)}
+                style={{
+                  fontFamily: 'Roboto',
+                  fontSize: '2rem',
+                  fontWeight: '600',
+                  color: '#073B4C',
+                }}
+              />
+            ) : (
+              <Text // Tech Name
+                style={{
+                  fontFamily: 'Roboto',
+                  fontSize: '2rem',
+                  fontWeight: '600',
+                  color: '#073B4C',
+                }}
+                margin={{ bottom: 'small' }}
+              >
+                {tileTitle}
+              </Text>
+            )}
           </Header>
 
           <Tabs flex="grow">
@@ -58,9 +85,10 @@ const TechTileModal = ({ onClose, title }) => {
               >
                 <TextArea // Pro Text Area
                   size="small"
-                  focusIndicator={true}
+                  // focusIndicator={true}
                   placeholder="Reasons to want to use this technology..."
                   fill
+                  background="#000000"
                   value={proText}
                   onChange={(event) => setProText(event.target.value)}
                 />
@@ -92,11 +120,27 @@ const TechTileModal = ({ onClose, title }) => {
               >
                 <TextArea // Opinion Text Area
                   size="small"
-                  focusIndicator={true}
+                  // focusIndicator={true}
                   placeholder="Informed opinions..."
                   fill
                   value={opinionText}
                   onChange={(event) => setOpinionText(event.target.value)}
+                />
+              </Box>
+            </Tab>
+            <Tab title="Notes">
+              <Box
+                pad="medium"
+                flex="grow"
+                fill
+              >
+                <TextArea // Notes Text Area
+                  size="small"
+                  // focusIndicator={true}
+                  placeholder="Additional Notes..."
+                  fill
+                  value={notesText}
+                  onChange={(event) => setNotesText(event.target.value)}
                 />
               </Box>
             </Tab>
