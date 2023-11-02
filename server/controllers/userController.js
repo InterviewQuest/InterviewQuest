@@ -160,7 +160,6 @@ const forgetPassword = async (req, res) => {
 };
 
 module.exports = {
-
   addUser,
   forgetPassword,
   resetPassword,
