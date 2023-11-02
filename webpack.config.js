@@ -40,7 +40,4 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-  node: {
-    url: true,
-  },
 };
