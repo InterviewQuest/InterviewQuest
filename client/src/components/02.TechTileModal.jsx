@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { useState } from 'react';
 import {
   Layer,
   Box,
@@ -21,12 +21,12 @@ const TechTileModal = ({ onClose, title }) => {
 
   return (
     <Grommet theme={theme}>
-      <Layer
+      <Layer // Modal Layer
         onEsc={onClose}
         onClickOutside={onClose}
         background="transparent"
       >
-        <Box
+        <Box // Visibile Background Layer
           pad="medium"
           width="large"
           height="large"
@@ -38,7 +38,7 @@ const TechTileModal = ({ onClose, title }) => {
           round="large"
         >
           <Header title={title}>
-            <Text
+            <Text // Tech Name
               style={{
                 fontFamily: 'Roboto',
                 fontSize: '2rem',
@@ -48,6 +48,7 @@ const TechTileModal = ({ onClose, title }) => {
               margin={{ bottom: 'small' }}
             >{`${title}`}</Text>
           </Header>
+
           <Tabs flex="grow">
             <Tab title="Pros">
               <Box
@@ -55,11 +56,13 @@ const TechTileModal = ({ onClose, title }) => {
                 flex="grow"
                 fill
               >
-                <TextArea
+                <TextArea // Pro Text Area
                   size="small"
                   focusIndicator={true}
                   placeholder="Reasons to want to use this technology..."
                   fill
+                  value={proText}
+                  onChange={(event) => setProText(event.target.value)}
                 />
               </Box>
             </Tab>
@@ -70,11 +73,13 @@ const TechTileModal = ({ onClose, title }) => {
                 flex="grow"
                 fill
               >
-                <TextArea
+                <TextArea // Con Text Area
                   size="small"
                   focusIndicator={true}
                   placeholder="Reasons against using this technology..."
                   fill
+                  value={conText}
+                  onChange={(event) => setConText(event.target.value)}
                 />
               </Box>
             </Tab>
@@ -85,11 +90,13 @@ const TechTileModal = ({ onClose, title }) => {
                 flex="grow"
                 fill
               >
-                <TextArea
+                <TextArea // Opinion Text Area
                   size="small"
                   focusIndicator={true}
                   placeholder="Informed opinions..."
                   fill
+                  value={opinionText}
+                  onChange={(event) => setOpinionText(event.target.value)}
                 />
               </Box>
             </Tab>
