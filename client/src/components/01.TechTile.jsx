@@ -7,7 +7,9 @@ const TechTile = ({ title, color, textStyle }) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => setShowModal(true);
-  const closeModal = () => setShowModal(false);
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   const boxStyles =
     size === 'small'
