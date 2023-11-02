@@ -30,8 +30,26 @@ export default function App() {
           element={<Main />}
         />
         <Route
+          path="/login"
+          element={<Login />}
+        />
+        <Route
           path="/test"
           element={<TestComponent />}
+        />
+
+        <Route
+          path="/forgetpassword"
+          element={<ForgetPW />}
+        />
+        <Route
+          path="/resetpassword/*"
+          element={<ResetPassword />}
+        />
+
+        <Route
+          path="/forgetpasswordlandingpage"
+          element={<ForgetPWLandingPage />}
         />
         {/* <Route
           path="/d"
