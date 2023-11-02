@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import {updateAlgo, updateSolved} from '../slices/mainSlice';
 
 const LeetcodeLogs = () => {
+  const dispatch = useDispatch();
   const [leetcodeLogs, setLeetCodeLogs] = useState();
   const { userSummary } = useSelector((state) => state.main);
   const { algorithms } = userSummary;
   const columns = [
     'solved',
-    'last_solved',
     'problem',
-    'interviews',
     'difficulty',
     'comfort_rating',
   ];
+  const [selectedRows, setSelectedRows] = useState([]);
 
   useEffect(() => {
     if (algorithms && algorithms.length > 0) {
@@ -41,6 +42,19 @@ const LeetcodeLogs = () => {
     }
   }, []);
 
+  // Function to toggle the selection of a row
+  const toggleRowSelection = (solved, user_id, algorithm_id, index) => {
+    const updatedSelectedRows = [...selectedRows];
+    updatedSelectedRows[index] = !updatedSelectedRows[index];
+    setSelectedRows(updatedSelectedRows);
+     solved === false ? solved === true : solved === false
+    dispatch(updateSolved(solved, user_id, algorithm_id))
+  };
+
+  const changeComfortRating = (user_id, algorithm_id, comfort_rating) => {
+    dispatch(updateAlgo(user_id, algorithm_id, comfort_rating))
+  }
+
   return (
     <table>
       <thead>
@@ -52,14 +66,19 @@ const LeetcodeLogs = () => {
       </thead>
       <tbody>
         {leetcodeLogs &&
-          leetcodeLogs.map((algo) => (
+          leetcodeLogs.map((algo, index) => (
             <tr key={algo.algorithm_id}>
-            <td>algo.solved</td>
-            <td>algo.last_solved</td>
-            <td>algo.problem</td>
-            <td>algo.interviews</td>
-            <td>algo.difficulty</td>
-            <td>algo.comfort_rating</td>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={selectedRows[index] || false}
+                  onChange={() => toggleRowSelection(algo.solved, algo.user_id, algo.algoirthm_id, index)}
+                />
+              </td>
+              {/* <td>{algo.last_solved}</td> */}
+              <td>{algo.algorithm}</td>
+              <td>{algo.difficulty}</td>
+              <input type = 'text' default = {algo.comfort_rating} onChange = {()=> changeComfortRating(algo.user_id, algo.algoirthm_id, algo.comfort_rating)}/>
             </tr>
           ))}
       </tbody>

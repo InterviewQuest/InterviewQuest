@@ -53,8 +53,10 @@ const Dashboard = () => {
   const [popUpStatus, setPopUpStatus] = useState('true');
 
   const linkToLeetCode = () => {
-    window.open(leetCodeQuestionLink, `_blank`);
-  };
+
+    window.open(url, `_blank`);
+
+
 
   const leetCodeVisualNavigation = () => {
     window.open(url, '_blank');
@@ -63,6 +65,7 @@ const Dashboard = () => {
 
   const technologyNavigation = () => {
     navigate('/main');
+
   };
 
   const leetCodeVisualNavigation = () => {
