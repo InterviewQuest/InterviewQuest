@@ -17,11 +17,13 @@ app.use(express.json());
 // Assuming your compiled React files are in "../client/build"
 app.use(express.static(path.resolve(__dirname, '../build')));
 
+
 //User routes go thru here
 app.use('/user', userRouter);
 
 //Algorithm routes thru here
 app.use('/algo', algoRouter);
+
 
 // All requests that don't match static files should return index.html
 app.get('*', (req, res) => {

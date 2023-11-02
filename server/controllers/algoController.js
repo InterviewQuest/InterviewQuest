@@ -38,7 +38,26 @@ const getAlgo = async (req, res) => {
   }
 };
 
-module.exports = {
-  addAlgo,
-  getAlgo,
+
+const getAlgo = async (req, res) => {
+    console.log('this is getalgo')
+  try {
+    const totalAlgo = await pool.query('SELECT * FROM algorithms');
+    const completedAlgo = await pool.query(
+      'SELECT * FROM algorithms WHERE solved = true'
+    );
+    console.log('this is rowcount', totalAlgo.rowCount);
+    return res
+      .status(201)
+      .json({ total: totalAlgo.rowCount, completed: completedAlgo.rowCount });
+  } catch (err) {
+    console.log('Error adding algorithm: ', err);
+    return res.status(500).send('Server Error During algoController.addAlgo');
+  }
 };
+
+module.exports = {
+    addAlgo,
+    getAlgo
+};
+
