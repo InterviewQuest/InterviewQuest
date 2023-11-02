@@ -41,6 +41,8 @@ const Dashboard = () => {
 
   const [completedLeetCode, setCompletedLeetCode] = useState('');
   const [totalLeetCode, setTotalLeetCode] = useState('');
+  const [completedTechnology, setCompletedTechnology] = useState('');
+  const [totalTechnology, setTotalTechnology] = useState('');
 
   const linkToLeetCode = () => {
     window.open(leetCodeQuestionLink, `_blank`);
@@ -53,13 +55,33 @@ const Dashboard = () => {
         'Content-Type': 'application/json',
       },
     })
-    .then((res)=> {
-      return res.json()
-    })
       .then((res) => {
-      console.log('this is response', res)
+        return res.json();
+      })
+      .then((res) => {
+        console.log('this is response', res);
         setCompletedLeetCode(res.completed);
         setTotalLeetCode(res.total);
+      })
+      .catch((err) => {
+        console.log('fetch algo err', err);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch('/tech/getTech', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        console.log('this is response', res);
+        setCompletedTechnology(res.completed);
+        setTotalTechnology(res.total);
       })
       .catch((err) => {
         console.log('fetch algo err', err);
@@ -94,11 +116,12 @@ const Dashboard = () => {
         >
           {!hasQuestionBeenSent && (
             <Box
-            onClick={linkToLeetCode}
-            role="button"
-            tabIndex={0}
-            aria-label="Go to LeetCode"
-            style={{ cursor: 'pointer' }}>
+              onClick={linkToLeetCode}
+              role="button"
+              tabIndex={0}
+              aria-label="Go to LeetCode"
+              style={{ cursor: 'pointer' }}
+            >
               <Notification
                 title="Default Status Title"
                 message="This is an example of a notification message"
@@ -110,9 +133,22 @@ const Dashboard = () => {
             </Box>
           )}
         </Box>
+        {/* {completedLeetCode && (
+          <Text size="small">
+           helloooooooooo
+          </Text>
+        )} */}
+        {completedLeetCode && totalLeetCode && (
+          <Text size="small">
+            {completedLeetCode} / {totalLeetCode}
+          </Text>
+        )}
 
-        {completedLeetCode && <Text size='small'> {completedLeetCode }</Text>}
-        {totalLeetCode && <Text size='small'> {totalLeetCode}</Text>}
+        {completedTechnology && totalTechnology && (
+          <Text size="small">
+            {completedTechnology} / {totalTechnology}
+          </Text>
+        )}
       </PageContent>
     </Page>
   );
