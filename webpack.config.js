@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './client/src/index.tsx',
+  entry: './client/src/index.js',
   output: {
     path: path.join(__dirname, 'build'),
     filename: 'bundle.js',
@@ -42,7 +42,7 @@ module.exports = {
     historyApiFallback: true,
     proxy: {
       '/': 'http://localhost:3000',
-  },
+    },
   },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],

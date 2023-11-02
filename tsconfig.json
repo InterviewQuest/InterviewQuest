@@ -13,7 +13,7 @@
   "include": [
     "client/src/**/*.ts",
     "client/src/**/*.tsx",
-    "client/src/components/00.TileGrid.jsx"
+    "client/src/components/00.TileGrid.tsx"
   ],
   "exclude": ["node_modules"]
 }
