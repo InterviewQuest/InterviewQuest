@@ -44,7 +44,7 @@ const techTileTitles = [
   'CSS Box Model',
 ];
 
-const AppBar = (props: { children?: React.ReactNode }) => {
+const AppBar = (props) => {
   return (
     <Header
       background="highlight"
@@ -55,7 +55,7 @@ const AppBar = (props: { children?: React.ReactNode }) => {
   );
 };
 
-const Main: React.FC = () => {
+const Main = () => {
   return (
     // <Grommet
     //   theme={theme}
@@ -67,12 +67,12 @@ const Main: React.FC = () => {
         <Text size="large">Interview Quest</Text>
       </AppBar>
 
-      <AppSidebar />
+      {/* <AppSidebar /> */}
       <PageContent>
         <PageHeader title="Welcome to Interview Quest!" />
         <TileGrid
           techTileTitles={techTileTitles}
-          color="gray4"
+          color="gray3"
         />
       </PageContent>
     </Page>

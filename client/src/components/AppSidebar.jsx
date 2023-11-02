@@ -11,7 +11,7 @@ import {
 } from 'grommet';
 import { Home, Notification, ChatOption } from 'grommet-icons';
 
-const AppSidebar = (props: { children?: React.ReactNode }) => {
+const AppSidebar = (props) => {
   return (
     <Sidebar
       background="highlight"

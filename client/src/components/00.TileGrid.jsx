@@ -2,16 +2,11 @@ import React, { FC, useContext } from 'react';
 import { Grid, GridColumnsType, ResponsiveContext } from 'grommet';
 import TechTile from './01.TechTile';
 
-interface TileGridProps {
-  techTileTitles: string[];
-  color: string;
-}
-
-const TileGrid: React.FC<TileGridProps> = ({ techTileTitles, color }) => {
+const TileGrid = ({ techTileTitles, color }) => {
   const size = useContext(ResponsiveContext);
   console.log('size is: ', size);
 
-  let columns: GridColumnsType;
+  let columns;
   if (size === 'small') {
     columns = 'fit';
   } else if (size === 'medium') {
