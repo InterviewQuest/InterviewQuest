@@ -3,12 +3,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const ForgetPWLandingPage = () => {
   const navigate = useNavigate();
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      navigate('/login');
+    }, 5000);
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
     <div>
-      <h1> this is login </h1>
+      <h1> Please check your email to reset password </h1>
       {/* <Link to ='/login'>
       <button type = 'button' id = 'gohomebutton'> go back to login </button>
       </Link> */}
@@ -16,4 +22,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgetPWLandingPage;

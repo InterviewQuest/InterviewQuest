@@ -9,6 +9,9 @@ const userRouter = require('./routes/user');
 const algoRouter = require('./routes/algo');
 
 const app = express();
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({ origin: 'http://localhost:3000' }));
