@@ -37,9 +37,10 @@ const AppBar = (props) => {
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const { problemOfTheDayObj, hasQuestionBeenSent } = useSelector(
+  const { problemOfTheDayObj, hasQuestionBeenSent, userSummary } = useSelector(
     (state) => state.main
   );
+  const { algorithms } = userSummary;
   const { algorithm, difficulty, url } = problemOfTheDayObj;
 
   const [completedLeetCode, setCompletedLeetCode] = useState('');
@@ -47,7 +48,7 @@ const Dashboard = () => {
   const [completedTechnology, setCompletedTechnology] = useState('');
   const [totalTechnology, setTotalTechnology] = useState('');
   const [popUpStatus, setPopUpStatus] = useState('true');
-
+  console.log(algorithms);
 
   const linkToLeetCode = () => {
     window.open(url, `_blank`);
@@ -55,20 +56,18 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetch('/algo/getAlgo', {
-      method: 'GET',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({
+        user_id: algorithms[0].user_id,
+      }),
     })
       .then((res) => {
         return res.json();
       })
       .then((res) => {
-        return res.json();
-      })
-      .then((res) => {
-        console.log('this is response', res);
-        console.log('this is response', res);
         setCompletedLeetCode(res.completed);
         setTotalLeetCode(res.total);
       })
@@ -79,16 +78,18 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetch('/tech/getTech', {
-      method: 'GET',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({
+        user_id: algorithms[0].user_id,
+      }),
     })
       .then((res) => {
         return res.json();
       })
       .then((res) => {
-        console.log('this is response', res);
         setCompletedTechnology(res.completed);
         setTotalTechnology(res.total);
       })
@@ -143,19 +144,14 @@ const Dashboard = () => {
             </Box>
           )}
         </Box>
-        {/* {completedLeetCode && (
-          <Text size="small">
-           helloooooooooo
-          </Text>
-        )} */}
-        {completedLeetCode && totalLeetCode && (
-          <Text size="small">
-            {completedLeetCode} / {totalLeetCode}
-          </Text>
-        )}
 
-        {completedLeetCode && <Text size='small'> {completedLeetCode }</Text>}
-        {totalLeetCode && <Text size='small'> {totalLeetCode}</Text>}
+        {completedLeetCode && <Text size="small"> {completedLeetCode}</Text>}
+        {totalLeetCode && <Text size="small"> {totalLeetCode}</Text>}
+
+        {completedTechnology && (
+          <Text size="small"> {completedTechnology}</Text>
+        )}
+        {totalTechnology && <Text size="small"> {totalTechnology}</Text>}
       </PageContent>
     </Page>
   );
