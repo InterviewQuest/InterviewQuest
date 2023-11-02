@@ -53,7 +53,18 @@ const Dashboard = () => {
   const [popUpStatus, setPopUpStatus] = useState('true');
 
   const linkToLeetCode = () => {
+
     window.open(url, `_blank`);
+
+
+
+  const leetCodeVisualNavigation = () => {
+    window.open(url, '_blank');
+    navigate('/leetcode');
+  };
+
+  const technologyNavigation = () => {
+    navigate('/main');
 
   };
 
@@ -67,15 +78,23 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    if (algorithms && algorithms.length > 0) {
-      fetch('/algo/getAlgo', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          user_id: algorithms[0].user_id,
-        }),
+
+    fetch('/algo/getAlgo', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: algorithms[0].user_id,
+      }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        setCompletedLeetCode(res.completed);
+        setTotalLeetCode(res.total);
+
       })
         .then((res) => {
           return res.json();
@@ -142,7 +161,7 @@ const Dashboard = () => {
           direction="row"
           justify="end" // This will align the child Box to the end (right side) of this Box
         >
-          {popUpStatus && hasQuestionBeenSent && (
+          {!hasQuestionBeenSent && (
             <Box
               onClick={linkToLeetCode}
               role="button"
@@ -152,18 +171,28 @@ const Dashboard = () => {
               border={{ color: 'shadow', size: 'small' }}
             >
               <Notification
-                title="Algorithm of the day"
-                message={algorithm}
-                icon={<Help />}
+                title="Default Status Title"
+                message="This is an example of a notification message"
                 onClose={(event) => {
                   event.stopPropagation();
-                  setPopUpStatus(false);
+                  dispatch(randomQuestion({ questionSent: true }));
                 }}
                 style={{ padding: '10px' }}
               />
             </Box>
           )}
         </Box>
+        {/* {completedLeetCode && (
+          <Text size="small">
+           helloooooooooo
+          </Text>
+        )} */}
+        {completedLeetCode && totalLeetCode && (
+          <Text size="small">
+            {completedLeetCode} / {totalLeetCode}
+          </Text>
+        )}
+
 
         <Heading margin="medium">Dashboard</Heading>
         <Box
@@ -196,6 +225,7 @@ const Dashboard = () => {
             />
           </Box>
         </Box>
+
       </PageContent>
     </Page>
   );

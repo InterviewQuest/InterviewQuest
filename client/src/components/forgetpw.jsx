@@ -18,7 +18,7 @@ const ForgetPW = () => {
       });
       const data = await results.json();
 
-      console.log('this is results post', data)
+      console.log('this is results post', data);
 
       if (data.emailExists === false) {
         console.log('this is message', data.message);
@@ -34,7 +34,10 @@ const ForgetPW = () => {
     <div>
       <h1> Forget your password? </h1>
       <h4>Please enter the email associated with your account </h4>
-      <h4 id="forgetpw-response" style={{ color: 'red' }}></h4>
+      <h4
+        id="forgetpw-response"
+        style={{ color: 'red' }}
+      ></h4>
       <form>
         Email:{' '}
         <input
