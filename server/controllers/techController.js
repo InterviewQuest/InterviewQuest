@@ -42,14 +42,21 @@ const addTech = async (req, res) => {
 };
 
 const getTech = async (req, res) => {
+  const { user_id } = req.body;
   try {
-    const totalTech = await pool.query('SELECT * FROM user_technologies');
+    const totalTech = await pool.query(
+      `SELECT * FROM user_technologies WHERE user_id = ${user_id} `
+    );
     const completedTech = await pool.query(
-      'SELECT * FROM user_technologies WHERE green = true'
+      `SELECT count(*) FROM user_technologies WHERE green = true AND user_id = ${user_id}`
     );
     return res
       .status(201)
-      .json({ total: totalTech.rowCount, completed: completedTech.rowCount });
+      .json({
+        data: totalTech.rows,
+        total: totalTech.rows.length,
+        completed: completedTech.rows[0].count,
+      });
   } catch (err) {
     console.log('Error getting tech: ', err);
     return res.status(500).send('Server Error During algoController.tech');

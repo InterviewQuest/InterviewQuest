@@ -1,7 +1,11 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUserLeetCodeInformation } from '../slices/mainSlice';
+import {} from '../slices/mainSlice';
+import { Help } from 'grommet-icons';
+import { MultipleValues } from './MultipleValues'; // Adjust the path as needed
+import { useNavigate } from 'react-router-dom';
+
 import {
   Box,
   Button,
@@ -34,36 +38,88 @@ const AppBar = (props) => {
 };
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { leetCodeQuestionLink, hasQuestionBeenSent } = useSelector(
+  const { problemOfTheDayObj, hasQuestionBeenSent, userSummary } = useSelector(
     (state) => state.main
   );
+  const { algorithm, difficulty, url } = problemOfTheDayObj;
+  const { algorithms, technologies } = userSummary;
 
   const [completedLeetCode, setCompletedLeetCode] = useState('');
   const [totalLeetCode, setTotalLeetCode] = useState('');
+  const [completedTechnology, setCompletedTechnology] = useState('');
+  const [totalTechnology, setTotalTechnology] = useState('');
+  const [popUpStatus, setPopUpStatus] = useState('true');
 
   const linkToLeetCode = () => {
     window.open(leetCodeQuestionLink, `_blank`);
   };
 
+  const leetCodeVisualNavigation = () => {
+    window.open(url, '_blank');
+    navigate('/leetcode');
+  };
+
+  const technologyNavigation = () => {
+    navigate('/main');
+  };
+
+  const leetCodeVisualNavigation = () => {
+    window.open(url, '_blank');
+    navigate('/leetcode')
+  };
+
+  const technologyNavigation = () => {
+    navigate('/main');
+  };
+
   useEffect(() => {
     fetch('/algo/getAlgo', {
-      method: 'GET',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({
+        user_id: algorithms[0].user_id,
+      }),
     })
       .then((res) => {
         return res.json();
       })
       .then((res) => {
-        console.log('this is response', res);
         setCompletedLeetCode(res.completed);
         setTotalLeetCode(res.total);
       })
       .catch((err) => {
         console.log('fetch algo err', err);
       });
+      }
+  }, []);
+
+  useEffect(() => {
+    if (technologies && technologies.length > 0){
+
+    fetch('/tech/getTech', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: technologies[0].user_id,
+      }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        setCompletedTechnology(res.completed);
+        setTotalTechnology(res.total);
+      })
+      .catch((err) => {
+        console.log('fetch algo err', err);
+      });
+    }
   }, []);
 
   return (
@@ -81,16 +137,16 @@ const Dashboard = () => {
             align="center"
             justify="center"
           >
-            <Text size="small"> Hello User... </Text>
+            <Text size="medium"> Hello User </Text>
           </Box>
-          <Box width="smal" />
+          <Box width="small" />
         </Box>
       </AppBar>
 
-      <PageContent>
+      <PageContent fill="horizontal">
         <Box
-          align="center"
-          justify="end"
+          fill="horizontal"
+          justify="end" // This will align the child Box to the end (right side) of this Box
         >
           {!hasQuestionBeenSent && (
             <Box
@@ -111,6 +167,16 @@ const Dashboard = () => {
             </Box>
           )}
         </Box>
+        {/* {completedLeetCode && (
+          <Text size="small">
+           helloooooooooo
+          </Text>
+        )} */}
+        {completedLeetCode && totalLeetCode && (
+          <Text size="small">
+            {completedLeetCode} / {totalLeetCode}
+          </Text>
+        )}
 
         {completedLeetCode && <Text size="small"> {completedLeetCode}</Text>}
         {totalLeetCode && <Text size="small"> {totalLeetCode}</Text>}

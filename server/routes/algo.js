@@ -4,7 +4,7 @@ const router = express.Router();
 const algoController = require('../controllers/algoController');
 
 
-router.get('/getAlgo', algoController.getAlgo);
+router.post('/getAlgo', algoController.getAlgo);
 
 
 router.post('/addAlgo', algoController.addAlgo);

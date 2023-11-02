@@ -13,6 +13,8 @@ import ForgetPW from './components/forgetpw';
 import ForgetPWLandingPage from './components/forgetpwlandingpage';
 import Login from './components/Login';
 import ResetPassword from './components/resetpassword';
+import LeetcodeLogs from './components/leetcodelogs';
+
 import theme from './components/styles/theme';
 
 export default function App() {
@@ -53,6 +55,11 @@ export default function App() {
         <Route
           path="/forgetpasswordlandingpage"
           element={<ForgetPWLandingPage />}
+        />
+
+        <Route
+          path="/leetcode"
+          element={<LeetcodeLogs />}
         />
         {/* <Route
           path="/d"
