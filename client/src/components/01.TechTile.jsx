@@ -1,41 +1,44 @@
-import React, { FC, useState } from 'react';
-import { Box, Text } from 'grommet';
+import React, { FC, useContext, useState } from 'react';
+import { Box, ResponsiveContext, Text } from 'grommet';
 import TechTileModal from './02.TechTileModal';
 
-interface TechTileProps {
-  title: string;
-  color?: string;
-}
-
-const TechTile: FC<TechTileProps> = ({ title, color }) => {
+const TechTile = ({ title, color, textStyle }) => {
+  const size = useContext(ResponsiveContext);
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
+
+  const boxStyles =
+    size === 'small'
+      ? {
+          minHeight: '5vh',
+        }
+      : {
+          aspectRatio: '1 / 1',
+          width: '10vw',
+          height: '10vw',
+        };
 
   return (
     <>
       <Box
         align="center"
         justify="center"
-        pad="medium"
-        border={{ color: 'gray8', size: 'small' }}
+        pad="small"
+        border={{ color: 'shadow', size: 'medium' }}
         round="medium"
         background={color}
         onClick={openModal}
         as="button"
-        hoverIndicator="highlight"
-        style={{
-          aspectRatio: '1 / 1',
-          minWidth: '120px',
-        }}
+        hoverIndicator="tertiary"
+        style={boxStyles}
       >
         <Text
           style={{
             overflow: 'hidden',
-            textOverflow: 'ellipsis,',
-            // whiteSpace: 'nowrap',
-            // fontSize: 'clamp(10px, 4vw, 16px)',
+            textOverflow: 'ellipsis',
+            ...textStyle,
           }}
         >
           {title}
