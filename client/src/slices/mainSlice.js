@@ -11,9 +11,9 @@ export const fetchInfo = createAsyncThunk('main/ENDPOINT', async (data) => {
 
 //Initial State of our application
 const initialState = {
-  leetCodeQuestionLink: 'https://leetcode.com/problemset/all/',
+  userSummary: {},
+  problemOfTheDayObj: {},
   hasQuestionBeenSent: false,
-  randoNumber: 0,
 };
 
 //Create a slice of the application
@@ -23,10 +23,11 @@ export const mainSlice = createSlice({
   //Reducers
   reducers: {
     //actions
-    randomQuestion: (state, action) => {
-      const {questionSent} = action.payload;
-
-      state.hasQuestionBeenSent = questionSent
+    setUserLeetCodeInformation: (state, action) => {
+      const { problemOfTheDay, success } = action.payload;
+      state.userSummary = action.payload;
+      state.problemOfTheDayObj = problemOfTheDay;
+      state.hasQuestionBeenSent = success;
     },
   },
 
@@ -39,4 +40,4 @@ export const mainSlice = createSlice({
 
 //Export our actions to be dispatched in our application
 
-export const { randomQuestion } = mainSlice.actions;
+export const { setUserLeetCodeInformation } = mainSlice.actions;
