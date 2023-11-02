@@ -12,6 +12,9 @@ const TechTile = ({ title, color, textStyle }) => {
 
   const openModal = () => setShowModal(true);
   const closeModal = () => {
+    /**
+     * todo: API Calls to Store Payload
+     */
     console.log(proText);
     setShowModal(false);
   };
