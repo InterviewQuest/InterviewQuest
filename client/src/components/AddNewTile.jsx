@@ -12,12 +12,30 @@ const AddNewTile = ({ title, color, textStyle }) => {
 
   const openModal = () => setShowModal(true);
   const closeModal = () => {
-    /**
-     * todo: API Calls to Store Payload
-     */
-    console.log(proText);
+    useEffect(() => {
+      fetch('/tech/addTech', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((res) => {
+        
+      })
+    });
     setShowModal(false);
   };
+
+  {
+    userId: Int,
+    technology: String,
+    pros: proText,
+    cons: conText,
+    opinion: opinionText,
+    notes: notes,
+    green: Boolean,
+  }
+
 
   const boxStyles =
     size === 'small'
