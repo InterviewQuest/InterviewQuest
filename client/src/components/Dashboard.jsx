@@ -40,10 +40,9 @@ const AppBar = (props) => {
 const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { problemOfTheDayObj, hasQuestionBeenSent, userSummary, userSummary } = useSelector(
+  const { problemOfTheDayObj, hasQuestionBeenSent, userSummary } = useSelector(
     (state) => state.main
   );
-  const { algorithms } = userSummary;
   const { algorithm, difficulty, url } = problemOfTheDayObj;
   const { algorithms, technologies } = userSummary;
 
@@ -52,15 +51,16 @@ const Dashboard = () => {
   const [completedTechnology, setCompletedTechnology] = useState('');
   const [totalTechnology, setTotalTechnology] = useState('');
   const [popUpStatus, setPopUpStatus] = useState('true');
-  console.log(algorithms);
 
   const linkToLeetCode = () => {
     window.open(url, `_blank`);
+
   };
 
   const leetCodeVisualNavigation = () => {
     window.open(url, '_blank');
-    navigate('/leetcode')
+     navigate('/leetcode')
+
   };
 
   const technologyNavigation = () => {
@@ -96,7 +96,6 @@ const Dashboard = () => {
     if (technologies && technologies.length > 0){
 
     fetch('/tech/getTech', {
-      method: 'POST',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -164,19 +163,39 @@ const Dashboard = () => {
             </Box>
           )}
         </Box>
-        {/* {completedLeetCode && (
-          <Text size="small">
-           helloooooooooo
-          </Text>
-        )} */}
-        {completedLeetCode && totalLeetCode && (
-          <Text size="small">
-            {completedLeetCode} / {totalLeetCode}
-          </Text>
-        )}
 
-        {completedLeetCode && <Text size='small'> {completedLeetCode }</Text>}
-        {totalLeetCode && <Text size='small'> {totalLeetCode}</Text>}
+        <Heading margin="medium">Dashboard</Heading>
+        <Box
+          direction="row"
+          align="center"
+          justify="center"
+          fill="horizontal"
+        >
+          <Box
+            role="button"
+            style={{ cursor: 'pointer' }}
+            onClick={leetCodeVisualNavigation}
+          >
+            <MultipleValues
+              completed={parseInt(completedLeetCode)}
+              total={parseInt(totalLeetCode)}
+              label1="Leetcode"
+              label2="Remaining LeetCode"
+            />
+          </Box>
+          <Box
+            role="button"
+            onClick={technologyNavigation}
+            style={{ cursor: 'pointer' }}
+          >
+            <MultipleValues
+              completed={parseInt(completedTechnology)}
+              total={parseInt(totalTechnology)}
+              label1="Technologies"
+              label2="Remaining Technology"
+            />
+          </Box>
+        </Box>
       </PageContent>
     </Page>
   );
