@@ -35,7 +35,7 @@ const TechTileModal = ({
           width="large"
           height="large"
           background={{
-            color: 'gray3',
+            color: 'white',
             size: 'cover',
           }}
           responsive={true}
@@ -65,6 +65,7 @@ const TechTileModal = ({
                   // focusIndicator={true}
                   placeholder="Reasons to want to use this technology..."
                   fill
+                  background="#000000"
                   value={proText}
                   onChange={(event) => setProText(event.target.value)}
                 />

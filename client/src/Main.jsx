@@ -69,8 +69,8 @@ const Main = () => {
 
       {/* <AppSidebar /> */}
       <PageContent>
-        <PageHeader title="Welcome to Interview Quest!" />
         <TileGrid
+          pad="medium"
           techTileTitles={techTileTitles}
           color="gray3"
         />
