@@ -9,6 +9,7 @@ interface TileGridProps {
 
 const TileGrid: React.FC<TileGridProps> = ({ techTileTitles, color }) => {
   const size = useContext(ResponsiveContext);
+  console.log('size is: ', size);
 
   let columns: GridColumnsType;
   if (size === 'small') {
