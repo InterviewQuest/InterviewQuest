@@ -10,6 +10,7 @@ import Dashboard from './components/Dashboard';
 import { Grommet } from 'grommet';
 import Main from './Main';
 import { TestComponent } from './components/TestComponent';
+import Login from './components/login';
 
 const theme = {
   global: {
