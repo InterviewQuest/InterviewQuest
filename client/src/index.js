@@ -13,34 +13,8 @@ import { TestComponent } from './components/TestComponent';
 
 import ForgetPW from './components/forgetpw';
 import ForgetPWLandingPage from './components/forgetpwlandingpage';
-import Login from './components/login';
+import Login from './components/Login';
 import ResetPassword from './components/resetpassword';
-
-const theme = {
-  global: {
-    colors: {
-      base: '#073B4C',
-      highlight: '#118AB2',
-      approve: '#06D6A0',
-      warn: '#FFD166',
-      danger: '#EF476F',
-      gray0: 'F8F9FA',
-      gray1: 'E9ECEF',
-      gray2: '#DEE2E6',
-      gray3: '#CED4DA',
-      gray4: '#ADB5BD',
-      gray5: '#6C757D',
-      gray6: '#495057',
-      gray7: '#343A40',
-      gray8: '#212529',
-    },
-    font: {
-      family: 'Roboto',
-      size: '18px',
-      height: '20px',
-    },
-  },
-};
 
 import theme from './components/styles/theme';
 
@@ -59,11 +33,11 @@ export default function App() {
           element={<Dashboard />}
         />
         <Route
-          path="/"
+          path="/main"
           element={<Main />}
         />
         <Route
-          path="/login"
+          path="/"
           element={<Login />}
         />
         <Route
