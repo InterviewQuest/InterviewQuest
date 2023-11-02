@@ -53,11 +53,11 @@ const Dashboard = () => {
         'Content-Type': 'application/json',
       },
     })
-    .then((res)=> {
-      return res.json()
-    })
       .then((res) => {
-      console.log('this is response', res)
+        return res.json();
+      })
+      .then((res) => {
+        console.log('this is response', res);
         setCompletedLeetCode(res.completed);
         setTotalLeetCode(res.total);
       })
@@ -94,11 +94,12 @@ const Dashboard = () => {
         >
           {!hasQuestionBeenSent && (
             <Box
-            onClick={linkToLeetCode}
-            role="button"
-            tabIndex={0}
-            aria-label="Go to LeetCode"
-            style={{ cursor: 'pointer' }}>
+              onClick={linkToLeetCode}
+              role="button"
+              tabIndex={0}
+              aria-label="Go to LeetCode"
+              style={{ cursor: 'pointer' }}
+            >
               <Notification
                 title="Default Status Title"
                 message="This is an example of a notification message"
@@ -111,8 +112,8 @@ const Dashboard = () => {
           )}
         </Box>
 
-        {completedLeetCode && <Text size='small'> {completedLeetCode }</Text>}
-        {totalLeetCode && <Text size='small'> {totalLeetCode}</Text>}
+        {completedLeetCode && <Text size="small"> {completedLeetCode}</Text>}
+        {totalLeetCode && <Text size="small"> {totalLeetCode}</Text>}
       </PageContent>
     </Page>
   );

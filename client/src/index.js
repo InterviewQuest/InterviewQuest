@@ -10,7 +10,12 @@ import Dashboard from './components/Dashboard';
 import { Grommet } from 'grommet';
 import Main from './Main';
 import { TestComponent } from './components/TestComponent';
-import Login from './components/login';
+
+import ForgetPW from './components/forgetpw';
+import ForgetPWLandingPage from './components/forgetpwlandingpage';
+import Login from './components/Login';
+import ResetPassword from './components/resetpassword';
+
 import theme from './components/styles/theme';
 
 export default function App() {
@@ -27,16 +32,30 @@ export default function App() {
           element={<Dashboard />}
         />
         <Route
-          path="/"
+          path="/main"
           element={<Main />}
         />
         <Route
-          path="/login"
+          path="/"
           element={<Login />}
         />
         <Route
           path="/test"
           element={<TestComponent />}
+        />
+
+        <Route
+          path="/forgetpassword"
+          element={<ForgetPW />}
+        />
+        <Route
+          path="/resetpassword/*"
+          element={<ResetPassword />}
+        />
+
+        <Route
+          path="/forgetpasswordlandingpage"
+          element={<ForgetPWLandingPage />}
         />
         {/* <Route
           path="/d"

@@ -3,9 +3,12 @@ const { parse } = require('pg-connection-string');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
+const jwt = require('jsonwebtoken');
 
 const config = parse(process.env.DATABASE_URL);
 config.ssl = {
+  rejectUnauthorized: false,
   rejectUnauthorized: false,
 };
 const pool = new Pool(config);
@@ -149,7 +152,9 @@ const forgetPassword = async (req, res) => {
   } else {
     //generate jwt token
     const resetToken = jwt.sign({ email }, secretKey, { expiresIn: '1h' });
+    const resetToken = jwt.sign({ email }, secretKey, { expiresIn: '1h' });
     //generate reset link
+    const resetLink = `http://localhost:8080/resetpassword?token=${resetToken}`;
     const resetLink = `http://localhost:8080/resetpassword?token=${resetToken}`;
 
     //create config for createTransport
@@ -157,12 +162,19 @@ const forgetPassword = async (req, res) => {
       service: 'gmail',
       host: 'smtp.gmail.com',
       port: '587',
+      service: 'gmail',
+      host: 'smtp.gmail.com',
+      port: '587',
       auth: {
+        user: 'interviewquestdev', // Replace with your Gmail email
+        pass: 'woxk qymy mnnr tbep', // Replace with your Gmail password
         user: 'interviewquestdev', // Replace with your Gmail email
         pass: 'woxk qymy mnnr tbep', // Replace with your Gmail password
       },
       secureConnection: 'false',
+      secureConnection: 'false',
       tls: {
+        ciphers: 'SSLv3',
         ciphers: 'SSLv3',
         rejectUnauthorized: false,
       },
@@ -171,7 +183,10 @@ const forgetPassword = async (req, res) => {
     //create message
     const mailMessage = {
       from: 'interviewquestdev',
+      from: 'interviewquestdev',
       to: email,
+      subject: 'Interview Quest: Please reset your Password',
+      html: `You have requested to reset your password. Click the following link to reset your password: ${resetLink}`,
       subject: 'Interview Quest: Please reset your Password',
       html: `You have requested to reset your password. Click the following link to reset your password: ${resetLink}`,
     };
@@ -181,10 +196,16 @@ const forgetPassword = async (req, res) => {
       return res
         .status(200)
         .json({ message: message, emailExists: emailExists });
+      message = 'password reset is sent to your email';
+      return res
+        .status(200)
+        .json({ message: message, emailExists: emailExists });
       return next();
     } catch (err) {
       return res.status(500).send({ message: err });
     }
+  }
+};
   }
 };
 

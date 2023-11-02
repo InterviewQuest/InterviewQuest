@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 
 const userRouter = require('./routes/user');
 const algoRouter = require('./routes/algo');
+const techRouter = require('./routes/tech');
 
 const app = express();
 app.use(bodyParser.json()); // for parsing application/json
@@ -22,6 +23,8 @@ app.use(express.json());
 app.use(express.static(path.resolve(__dirname, '../build')));
 
 //User routes go thru here
+app.use('/tech', techRouter);
+
 app.use('/user', userRouter);
 
 //Algorithm routes thru here
