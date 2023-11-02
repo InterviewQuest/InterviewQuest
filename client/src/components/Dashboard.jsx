@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { randomQuestion } from '../slices/mainSlice';
+import { setUserLeetCodeInformation } from '../slices/mainSlice';
 import {
   Box,
   Button,

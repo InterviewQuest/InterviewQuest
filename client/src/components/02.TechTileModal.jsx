@@ -9,6 +9,7 @@ import {
   Text,
   TextInput,
   TextArea,
+  StarRating,
 } from 'grommet';
 import { Grommet } from 'grommet';
 import theme from './styles/theme.js';
@@ -124,12 +125,29 @@ const TechTileModal = ({
                 />
               </Box>
             </Tab>
+            <Tab title="Notes">
+              <Box
+                pad="medium"
+                flex="grow"
+                fill
+              >
+                <TextArea // Notes Text Area
+                  size="small"
+                  // focusIndicator={true}
+                  placeholder="Additional Notes..."
+                  fill
+                  value={notesText}
+                  onChange={(event) => setNotesText(event.target.value)}
+                />
+              </Box>
+            </Tab>
           </Tabs>
 
           <Box
             align="end"
             pad="medium"
           >
+            <StarRating />
             <Button
               label="Close"
               onClick={onClose}

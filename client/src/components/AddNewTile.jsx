@@ -1,41 +1,48 @@
 import React, { FC, useContext, useState } from 'react';
 import { Box, ResponsiveContext, Text } from 'grommet';
+import { useDispatch, useSelector } from 'react-redux';
 import TechTileModal from './02.TechTileModal';
+import { storeTileInfo } from '../slices/mainSlice.js';
 
 const AddNewTile = ({ title, color, textStyle }) => {
+  const dispatch = useDispatch();
+  const { userSummary } = useSelector((state) => state.main);
   const size = useContext(ResponsiveContext);
   const [showModal, setShowModal] = useState(false);
   //* ! State variables for each Text Area
   const [proText, setProText] = useState('');
   const [conText, setConText] = useState('');
   const [opinionText, setOpinionText] = useState('');
+  const [notesText, setNotesText] = useState('');
 
   const openModal = () => setShowModal(true);
   const closeModal = () => {
-    useEffect(() => {
-      fetch('/tech/addTech', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then((res) => {
-        
-      })
-    });
+    const userID = userSummary.algorithms[0].userId;
+    const payload = {
+      userId: userID,
+      technology: title,
+      pros: proText,
+      cons: conText,
+      opinion: opinionText,
+      notes: notesText,
+      green: false,
+    };
+    dispatch(storeTileInfo(payload));
     setShowModal(false);
   };
 
-  {
-    userId: Int,
-    technology: String,
-    pros: proText,
-    cons: conText,
-    opinion: opinionText,
-    notes: notes,
-    green: Boolean,
-  }
+  // {
+  //   userId: Int,
+  //   technology: String,
+  //   pros: proText,
+  //   cons: conText,
+  //   opinion: opinionText,
+  //   notes: notes,
+  //   green: Boolean,
+  // }
 
+  // //Go inside
+  // const userID = userSummary.algorithms[0].userId
 
   const boxStyles =
     size === 'small'
@@ -82,6 +89,8 @@ const AddNewTile = ({ title, color, textStyle }) => {
           setConText={setConText}
           opinionText={opinionText}
           setOpinionText={setOpinionText}
+          notesText={notesText}
+          setNotesText={setNotesText}
         />
       )}
     </>

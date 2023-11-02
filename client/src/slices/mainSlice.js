@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { application } from 'express';
 
 export const fetchInfo = createAsyncThunk('main/ENDPOINT', async (data) => {
   try {
@@ -8,6 +9,46 @@ export const fetchInfo = createAsyncThunk('main/ENDPOINT', async (data) => {
     console.log(err);
   }
 });
+
+export const storeTileInfo = createAsyncThunk(
+  'main/addTech',
+  async (payload) => {
+    try {
+      const response = await fetch('/tech/addTech', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+      // const data = await response.json();
+      // return data;
+    } catch (err) {
+      console.error('Failed to add tech info', err);
+      throw err;
+    }
+  }
+);
+
+// export const retrieveTileInfo = createAsyncThunk(
+//   'main/getTech',
+//   async (req, res) => {
+//     try {
+//       const response = await fetch('/tech/getTech', {
+//         method: 'GET',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify(payload),
+//       });
+//       // const data = await response.json();
+//       // return data;
+//     } catch (err) {
+//       console.error('Failed to add tech info', err);
+//       throw err;
+//     }
+//   }
+// );
 
 //Initial State of our application
 const initialState = {
