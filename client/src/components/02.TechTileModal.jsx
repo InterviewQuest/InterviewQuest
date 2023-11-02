@@ -62,7 +62,7 @@ const TechTileModal = ({
               >
                 <TextArea // Pro Text Area
                   size="small"
-                  focusIndicator={true}
+                  // focusIndicator={true}
                   placeholder="Reasons to want to use this technology..."
                   fill
                   value={proText}
@@ -96,7 +96,7 @@ const TechTileModal = ({
               >
                 <TextArea // Opinion Text Area
                   size="small"
-                  focusIndicator={true}
+                  // focusIndicator={true}
                   placeholder="Informed opinions..."
                   fill
                   value={opinionText}
