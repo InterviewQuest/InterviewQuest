@@ -10,6 +10,7 @@ import {
   TextInput,
   TextArea,
   StarRating,
+  ThumbsRating,
 } from 'grommet';
 import { Grommet } from 'grommet';
 import theme from './styles/theme.js';
@@ -149,7 +150,6 @@ const TechTileModal = ({
             align="end"
             pad="medium"
           >
-            <StarRating />
             <Button
               label="Close"
               onClick={onClose}

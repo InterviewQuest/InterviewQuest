@@ -19,16 +19,25 @@ const addAlgo = async (req, res) => {
     console.log('Error adding algorithm: ', err);
     res.status(500).send('Server Error During algoController.addAlgo');
   }
-  const { algorithm, difficulty, description, url } = req.body;
+};
+
+const getAlgo = async (req, res) => {
+  const { user_id } = req.body;
   try {
-    const result = await pool.query(
-      'INSERT INTO algorithms(algorithm, difficulty, description, url) VALUES ($1, $2, $3, $4) RETURNING *',
-      [algorithm, difficulty, description, url]
+    const totalAlgo = await pool.query(
+      `SELECT * FROM user_algorithms WHERE user_id = ${user_id} `
     );
-    res.status(201).json(result.rows[0]);
+    const completedAlgo = await pool.query(
+      `SELECT count(*) FROM user_algorithms WHERE solved = true AND user_id = ${user_id}`
+    );
+    return res.status(201).json({
+      data: totalAlgo.rows,
+      total: totalAlgo.rows.length,
+      completed: completedAlgo.rows[0].count,
+    });
   } catch (err) {
     console.log('Error adding algorithm: ', err);
-    res.status(500).send('Server Error During algoController.addAlgo');
+    return res.status(500).send('Server Error During algoController.addAlgo');
   }
 };
 

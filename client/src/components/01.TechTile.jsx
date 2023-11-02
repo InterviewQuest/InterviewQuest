@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Box, ResponsiveContext, Text } from 'grommet';
+import { Box, ResponsiveContext, Text, ThumbsRating } from 'grommet';
 import TechTileModal from './02.TechTileModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { storeTileInfo } from '../slices/mainSlice.js';
@@ -14,6 +14,13 @@ const TechTile = ({ title, color, textStyle }) => {
   const [conText, setConText] = useState('');
   const [opinionText, setOpinionText] = useState('');
   const [notesText, setNotesText] = useState('');
+  const [thumbRating, setThumbRating] = useState('gray3');
+
+  const setTileColor = () => {
+    if (thumbRating === 'gray3') return 'gray3';
+    if (thumbRating) return 'green';
+    return 'red';
+  };
 
   const openModal = () => setShowModal(true);
   const closeModal = () => {
@@ -50,7 +57,7 @@ const TechTile = ({ title, color, textStyle }) => {
         pad="small"
         border={{ color: 'shadow', size: 'medium' }}
         round="medium"
-        background={color}
+        background={setTileColor()}
         onClick={openModal}
         as="button"
         hoverIndicator="tertiary"
@@ -67,6 +74,13 @@ const TechTile = ({ title, color, textStyle }) => {
         >
           {title}
         </Text>
+
+        <Footer>
+          <ThumbsRating
+            value={thumbRating}
+            onChange={(value) => setThumbRating(value)}
+          />
+        </Footer>
       </Box>
       {showModal && (
         <TechTileModal

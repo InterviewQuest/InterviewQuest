@@ -3,12 +3,9 @@ const { parse } = require('pg-connection-string');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
-const jwt = require('jsonwebtoken');
 
 const config = parse(process.env.DATABASE_URL);
 config.ssl = {
-  rejectUnauthorized: false,
   rejectUnauthorized: false,
 };
 const pool = new Pool(config);
@@ -152,9 +149,8 @@ const forgetPassword = async (req, res) => {
   } else {
     //generate jwt token
     const resetToken = jwt.sign({ email }, secretKey, { expiresIn: '1h' });
-    const resetToken = jwt.sign({ email }, secretKey, { expiresIn: '1h' });
+
     //generate reset link
-    const resetLink = `http://localhost:8080/resetpassword?token=${resetToken}`;
     const resetLink = `http://localhost:8080/resetpassword?token=${resetToken}`;
 
     //create config for createTransport
@@ -204,8 +200,6 @@ const forgetPassword = async (req, res) => {
     } catch (err) {
       return res.status(500).send({ message: err });
     }
-  }
-};
   }
 };
 
