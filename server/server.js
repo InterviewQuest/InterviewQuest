@@ -17,12 +17,9 @@ const PORT = process.env.PORT || 3000;
 app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(express.json());
 
-// Assuming your compiled React files are in "../client/build"
-app.use(express.static(path.resolve(__dirname, '../build')));
-
-// All requests that don't match static files should return index.html
+//Handle Multiple Routes to different page
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
+  return res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
 });
 
 //User routes go thru here
@@ -30,6 +27,11 @@ app.use('/user', userRouter);
 
 //Algorithm routes thru here
 app.use('/algo', algoRouter);
+
+//Handle Multiple Routes to different page
+app.get('*', (req, res) => {
+  return res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
+});
 
 //Unknown route handler
 app.use((req, res) => res.sendStatus(404));

@@ -54,11 +54,11 @@ const forgetPassword = async (req, res) => {
 
   const results = await pool.query(query, [email]);
   console.log('this is pool results', results.rowCount);
-  results.rowCount === 0 ? emailExists = false : emailExists = true;
-  console.log('this is email exists', emailExists)
+  results.rowCount === 0 ? (emailExists = false) : (emailExists = true);
+  console.log('this is email exists', emailExists);
   if (emailExists === false) {
     message = 'Sorry, this email does not exist';
-    console.log('this is message', message)
+    console.log('this is message', message);
     return res.status(200).json({ message: message, emailExists: emailExists });
   } else {
     //generate jwt token
@@ -105,5 +105,4 @@ const forgetPassword = async (req, res) => {
 module.exports = {
   addUser,
   forgetPassword,
-  resetPassword
 };
