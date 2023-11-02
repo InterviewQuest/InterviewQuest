@@ -19,13 +19,6 @@ const theme = {
       gray7: '#343A40',
       gray8: '#212529',
     },
-    tab: {
-      color: '#072236',
-      active: {
-        color: '#F37273',
-        background: '#616F9C',
-      },
-    },
     font: {
       family: 'Roboto',
       size: '18px',

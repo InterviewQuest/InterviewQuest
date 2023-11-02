@@ -10,7 +10,7 @@ import {
   TextInput,
   TextArea,
 } from 'grommet';
-import { Grommet } from 'grommet-icons';
+import { Grommet } from 'grommet';
 import theme from './styles/theme.js';
 
 const TechTileModal = ({ onClose, title }) => {
