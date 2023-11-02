@@ -10,6 +10,10 @@ import Dashboard from './components/Dashboard';
 import { Grommet } from 'grommet';
 import Main from './Main';
 import { TestComponent } from './components/TestComponent';
+import ForgetPW from './components/forgetpw';
+import ForgetPWLandingPage from './components/forgetpwlandingpage';
+import Login from './components/login';
+import ResetPassword from './components/resetpassword';
 
 const theme = {
   global: {
@@ -55,8 +59,26 @@ export default function App() {
           element={<Main />}
         />
         <Route
+          path="/login"
+          element={<Login />}
+        />
+        <Route
           path="/test"
           element={<TestComponent />}
+        />
+
+        <Route
+          path="/forgetpassword"
+          element={<ForgetPW />}
+        />
+         <Route
+          path="/resetpassword/*"
+          element={<ResetPassword />}
+        />
+
+        <Route
+          path="/forgetpasswordlandingpage"
+          element={<ForgetPWLandingPage />}
         />
         {/* <Route
           path="/d"
