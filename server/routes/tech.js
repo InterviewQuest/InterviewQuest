@@ -8,6 +8,7 @@ router.get('/getTech', techController.getTech);
 
 router.patch('/updateNotes', techController.updateNotes);
 router.patch('/updateGreen', techController.updateGreen);
+router.patch('/updateTech', techController.updateTech);
 
 router.post('/addTech', techController.addTech);
 
