@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { setUserLeetCodeInformation } from '../slices/mainSlice';
+
 
 const Login = () => {
+  const dispatch = useDispatch();
   const [loginState, setLoginState] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -28,6 +31,7 @@ const Login = () => {
       const parsed = await user.json();
       if (parsed.success) {
         console.log('pob: ', parsed);
+        dispatch(setUserLeetCodeInformation(parsed))
         return navigate('/dashboard')
       } else {
         alert('Incorrect Username/Password');
