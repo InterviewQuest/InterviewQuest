@@ -15,7 +15,8 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 
 const PORT = process.env.PORT || 3000;
 
-app.use(cors({ origin: 'http://localhost:3000' }));
+// app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors());
 app.use(express.json());
 
 // Assuming your compiled React files are in "../client/build"

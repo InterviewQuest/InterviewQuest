@@ -1,7 +1,9 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { randomQuestion } from '../slices/mainSlice';
+import {} from '../slices/mainSlice';
+import { Help } from 'grommet-icons';
+
 import {
   Box,
   Button,
@@ -35,9 +37,10 @@ const AppBar = (props) => {
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const { leetCodeQuestionLink, hasQuestionBeenSent } = useSelector(
+  const { problemOfTheDayObj, hasQuestionBeenSent } = useSelector(
     (state) => state.main
   );
+  const { algorithm, difficulty, url } = problemOfTheDayObj;
 
   const [completedLeetCode, setCompletedLeetCode] = useState('');
   const [totalLeetCode, setTotalLeetCode] = useState('');
@@ -45,7 +48,7 @@ const Dashboard = () => {
   const [totalTechnology, setTotalTechnology] = useState('');
 
   const linkToLeetCode = () => {
-    window.open(leetCodeQuestionLink, `_blank`);
+    window.open(url, `_blank`);
   };
 
   useEffect(() => {
@@ -59,6 +62,10 @@ const Dashboard = () => {
         return res.json();
       })
       .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        console.log('this is response', res);
         console.log('this is response', res);
         setCompletedLeetCode(res.completed);
         setTotalLeetCode(res.total);
@@ -114,7 +121,7 @@ const Dashboard = () => {
           align="center"
           justify="end"
         >
-          {!hasQuestionBeenSent && (
+          {popUpStatus && hasQuestionBeenSent && (
             <Box
               onClick={linkToLeetCode}
               role="button"
@@ -123,11 +130,12 @@ const Dashboard = () => {
               style={{ cursor: 'pointer' }}
             >
               <Notification
-                title="Default Status Title"
-                message="This is an example of a notification message"
+                title="Algorithm of the day"
+                message={algorithm}
+                icon={<Help />}
                 onClose={(event) => {
                   event.stopPropagation();
-                  dispatch(randomQuestion({ questionSent: true }));
+                  setPopUpStatus(false);
                 }}
               />
             </Box>
@@ -144,11 +152,8 @@ const Dashboard = () => {
           </Text>
         )}
 
-        {completedTechnology && totalTechnology && (
-          <Text size="small">
-            {completedTechnology} / {totalTechnology}
-          </Text>
-        )}
+        {completedLeetCode && <Text size='small'> {completedLeetCode }</Text>}
+        {totalLeetCode && <Text size='small'> {totalLeetCode}</Text>}
       </PageContent>
     </Page>
   );
