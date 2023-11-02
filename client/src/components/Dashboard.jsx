@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {} from '../slices/mainSlice';
 import { Help } from 'grommet-icons';
+import { MultipleValues } from './MultipleValues'; // Adjust the path as needed
+import { useNavigate } from 'react-router-dom';
 
 import {
   Box,
@@ -36,12 +38,14 @@ const AppBar = (props) => {
 };
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { problemOfTheDayObj, hasQuestionBeenSent, userSummary } = useSelector(
+  const { problemOfTheDayObj, hasQuestionBeenSent, userSummary, userSummary } = useSelector(
     (state) => state.main
   );
   const { algorithms } = userSummary;
   const { algorithm, difficulty, url } = problemOfTheDayObj;
+  const { algorithms, technologies } = userSummary;
 
   const [completedLeetCode, setCompletedLeetCode] = useState('');
   const [totalLeetCode, setTotalLeetCode] = useState('');
@@ -54,7 +58,18 @@ const Dashboard = () => {
     window.open(url, `_blank`);
   };
 
+  const leetCodeVisualNavigation = () => {
+    window.open(url, '_blank');
+    navigate('/leetcode')
+  };
+
+  const technologyNavigation = () => {
+    navigate('/main');
+  };
+
   useEffect(() => {
+    if (algorithms && algorithms.length > 0){
+
     fetch('/algo/getAlgo', {
       method: 'POST',
       headers: {
@@ -74,16 +89,20 @@ const Dashboard = () => {
       .catch((err) => {
         console.log('fetch algo err', err);
       });
+      }
   }, []);
 
   useEffect(() => {
+    if (technologies && technologies.length > 0){
+
     fetch('/tech/getTech', {
+      method: 'POST',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        user_id: algorithms[0].user_id,
+        user_id: technologies[0].user_id,
       }),
     })
       .then((res) => {
@@ -96,6 +115,7 @@ const Dashboard = () => {
       .catch((err) => {
         console.log('fetch algo err', err);
       });
+    }
   }, []);
 
   return (
@@ -113,16 +133,16 @@ const Dashboard = () => {
             align="center"
             justify="center"
           >
-            <Text size="small"> Hello User... </Text>
+            <Text size="medium"> Hello User </Text>
           </Box>
-          <Box width="smal" />
+          <Box width="small" />
         </Box>
       </AppBar>
 
-      <PageContent>
+      <PageContent fill="horizontal">
         <Box
-          align="center"
-          justify="end"
+          fill="horizontal"
+          justify="end" // This will align the child Box to the end (right side) of this Box
         >
           {popUpStatus && hasQuestionBeenSent && (
             <Box
@@ -144,14 +164,19 @@ const Dashboard = () => {
             </Box>
           )}
         </Box>
-
-        {completedLeetCode && <Text size="small"> {completedLeetCode}</Text>}
-        {totalLeetCode && <Text size="small"> {totalLeetCode}</Text>}
-
-        {completedTechnology && (
-          <Text size="small"> {completedTechnology}</Text>
+        {/* {completedLeetCode && (
+          <Text size="small">
+           helloooooooooo
+          </Text>
+        )} */}
+        {completedLeetCode && totalLeetCode && (
+          <Text size="small">
+            {completedLeetCode} / {totalLeetCode}
+          </Text>
         )}
-        {totalTechnology && <Text size="small"> {totalTechnology}</Text>}
+
+        {completedLeetCode && <Text size='small'> {completedLeetCode }</Text>}
+        {totalLeetCode && <Text size='small'> {totalLeetCode}</Text>}
       </PageContent>
     </Page>
   );

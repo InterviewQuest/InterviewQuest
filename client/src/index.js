@@ -59,7 +59,7 @@ export default function App() {
           element={<ForgetPWLandingPage />}
         />
 
-        <Route
+<Route
           path="/leetcode"
           element={<LeetcodeLogs />}
         />

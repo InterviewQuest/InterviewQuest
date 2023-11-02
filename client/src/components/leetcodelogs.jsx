@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -46,23 +47,23 @@ const LeetcodeLogs = () => {
       <thead>
         <tr>
           {columns.map((item) => (
-            <th>{item}</th>
-          ))}
+            <th key={item}>{item}</th>
+          )}
         </tr>
       </thead>
       <tbody>
-  {leetcodeLogs && leetcodeLogs.map((algo) => (
-    <tr key={algo.algoritm_id}>
-      <td>
-        <div className="entry">
-          {columns.map((item) => (
-            <td key={item}>{algo[item]}</td>
-          ))}
-        </div>
-      </td>
-    </tr>
-  ))}
-</tbody>
+        {leetcodeLogs && leetcodeLogs.map((algo) => (
+          <tr key={algo.algoritm_id}>
+            <td>
+              <div className="entry">
+                {columns.map((item) => (
+                  <td key={item}>{algo[item]}</td>
+                )}
+              </div>
+            </td>
+          </tr>
+        )}
+      </tbody>
     </table>
   );
 };

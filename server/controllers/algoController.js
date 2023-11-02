@@ -23,11 +23,16 @@ const addAlgo = async (req, res) => {
 
 const getAlgo = async (req, res) => {
   const { user_id } = req.body;
+  const { user_id } = req.body;
   try {
     const totalAlgo = await pool.query(
       `SELECT * FROM user_algorithms WHERE user_id = ${user_id} `
     );
+    const totalAlgo = await pool.query(
+      `SELECT * FROM user_algorithms WHERE user_id = ${user_id} `
+    );
     const completedAlgo = await pool.query(
+      `SELECT count(*) FROM user_algorithms WHERE solved = true AND user_id = ${user_id}`
       `SELECT count(*) FROM user_algorithms WHERE solved = true AND user_id = ${user_id}`
     );
     console.log(totalAlgo.rows.length);
