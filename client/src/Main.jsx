@@ -22,6 +22,8 @@ import {
 // import Tileimport TileGrid from './components/00.TileGrid';
 import TileGrid from './components/00.TileGrid';
 import AppSidebar from './components/AppSidebar';
+import Social from './components/AppFooter';
+import Media from './components/AppFooter';
 
 // const theme = {};
 
@@ -61,21 +63,42 @@ const Main = () => {
     //   theme={theme}
     //   full
     // >
-
-    <Page>
-      <AppBar>
+    <Grid
+      rows={['xsmall', 'large', 'small']}
+      columns={['auto', 'flex']}
+      areas={[
+        ['header', 'header'],
+        ['sidebar', 'main'],
+        ['footer', 'footer'],
+      ]}
+      gap="small"
+    >
+      <AppBar
+        background="shadow"
+        pad="medium"
+        gap="medium"
+        gridArea="header"
+      >
         <Text size="large">Interview Quest</Text>
       </AppBar>
-
-      {/* <AppSidebar /> */}
-      <PageContent>
-        <TileGrid
-          pad="medium"
-          techTileTitles={techTileTitles}
-          color="gray3"
-        />
-      </PageContent>
-    </Page>
+      <AppSidebar
+        background="shadow"
+        pad="small"
+        gap="small"
+        gridArea="sidebar"
+      />
+      <Page gridArea="main">
+        {/* <AppSidebar /> */}
+        <PageContent>
+          <TileGrid
+            pad="medium"
+            techTileTitles={techTileTitles}
+            color="gray3"
+          />
+        </PageContent>
+      </Page>
+      <Media gridArea={['footer', 'footer']} />
+    </Grid>
     // </Grommet>
   );
 };

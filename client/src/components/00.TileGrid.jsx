@@ -1,6 +1,8 @@
 import React, { FC, useContext } from 'react';
 import { Grid, GridColumnsType, ResponsiveContext } from 'grommet';
 import TechTile from './01.TechTile';
+import AddNewTile from './AddNewTile';
+import { base } from 'grommet-icons';
 
 const TileGrid = ({ techTileTitles, color }) => {
   const size = useContext(ResponsiveContext);
@@ -10,10 +12,10 @@ const TileGrid = ({ techTileTitles, color }) => {
   if (size === 'small') {
     columns = 'fit';
   } else if (size === 'medium') {
-    columns = ['1fr', '1fr', '1fr'];
+    columns = ['1fr', '1fr', '1fr', '1fr'];
   } else {
     //for large display
-    columns = ['1fr', '1fr', '1fr', '1fr'];
+    columns = ['1fr', '1fr', '1fr', '1fr', '1fr'];
   }
 
   return (
@@ -23,6 +25,12 @@ const TileGrid = ({ techTileTitles, color }) => {
       responsive
       style={size === 'large' ? { maxWidth: '80vw', margin: '0 auto' } : {}}
     >
+      <AddNewTile
+        key="addNew"
+        title="Add New"
+        color="highlight"
+        textStyle={{ fontWeight: 'bold', color: 'base' }}
+      />
       {techTileTitles.map((title, index) => (
         <TechTile
           key={index}

@@ -15,7 +15,7 @@ import theme from './styles/theme.js';
 
 const TechTileModal = ({
   onClose,
-  title,
+  title: initialTileTitle,
   setProText,
   setConText,
   setOpinionText,
@@ -23,6 +23,8 @@ const TechTileModal = ({
   conText,
   opinionText,
 }) => {
+  const [tileTitle, setTileTitle] = useState(initialTileTitle || '');
+
   return (
     <Grommet theme={theme}>
       <Layer // Modal Layer
@@ -41,16 +43,33 @@ const TechTileModal = ({
           responsive={true}
           round="large"
         >
-          <Header title={title}>
-            <Text // Tech Name
-              style={{
-                fontFamily: 'Roboto',
-                fontSize: '2rem',
-                fontWeight: '600',
-                color: '#073B4C',
-              }}
-              margin={{ bottom: 'small' }}
-            >{`${title}`}</Text>
+          {/* <Header title={title}> */}
+          <Header>
+            {initialTileTitle === 'addNew' ? (
+              <TextInput
+                placeholder="Enter title here..."
+                value={''}
+                onChange={(event) => setTileTitle(event.target.value)}
+                style={{
+                  fontFamily: 'Roboto',
+                  fontSize: '2rem',
+                  fontWeight: '600',
+                  color: '#073B4C',
+                }}
+              />
+            ) : (
+              <Text // Tech Name
+                style={{
+                  fontFamily: 'Roboto',
+                  fontSize: '2rem',
+                  fontWeight: '600',
+                  color: '#073B4C',
+                }}
+                margin={{ bottom: 'small' }}
+              >
+                {tileTitle}
+              </Text>
+            )}
           </Header>
 
           <Tabs flex="grow">

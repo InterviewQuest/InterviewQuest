@@ -11,6 +11,7 @@ import { Grommet } from 'grommet';
 import Main from './Main';
 import { TestComponent } from './components/TestComponent';
 import Login from './components/login';
+import theme from './components/styles/theme';
 
 export default function App() {
   return (

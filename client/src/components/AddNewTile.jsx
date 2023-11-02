@@ -2,7 +2,7 @@ import React, { FC, useContext, useState } from 'react';
 import { Box, ResponsiveContext, Text } from 'grommet';
 import TechTileModal from './02.TechTileModal';
 
-const TechTile = ({ title, color, textStyle }) => {
+const AddNewTile = ({ title, color, textStyle }) => {
   const size = useContext(ResponsiveContext);
   const [showModal, setShowModal] = useState(false);
   //* ! State variables for each Text Area
@@ -43,10 +43,8 @@ const TechTile = ({ title, color, textStyle }) => {
         as="button"
         hoverIndicator="tertiary"
         style={boxStyles}
-        title={title}
       >
         <Text
-          title={title}
           style={{
             overflow: 'hidden',
             textOverflow: 'ellipsis',
@@ -59,7 +57,7 @@ const TechTile = ({ title, color, textStyle }) => {
       {showModal && (
         <TechTileModal
           onClose={closeModal}
-          title={title}
+          title={'addNew'}
           proText={proText}
           setProText={setProText}
           conText={conText}
@@ -72,4 +70,4 @@ const TechTile = ({ title, color, textStyle }) => {
   );
 };
 
-export default TechTile;
+export default AddNewTile;
