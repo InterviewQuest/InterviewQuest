@@ -46,6 +46,8 @@ const Dashboard = () => {
   const [totalLeetCode, setTotalLeetCode] = useState('');
   const [completedTechnology, setCompletedTechnology] = useState('');
   const [totalTechnology, setTotalTechnology] = useState('');
+  const [popUpStatus, setPopUpStatus] = useState('true');
+
 
   const linkToLeetCode = () => {
     window.open(url, `_blank`);
