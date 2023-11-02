@@ -4,7 +4,6 @@ const { parse } = require('pg-connection-string');
 const config = parse(process.env.DATABASE_URL);
 config.ssl = {
   rejectUnauthorized: false,
-  rejectUnauthorized: false,
 };
 const pool = new Pool(config);
 
@@ -30,21 +29,6 @@ const addAlgo = async (req, res) => {
   } catch (err) {
     console.log('Error adding algorithm: ', err);
     res.status(500).send('Server Error During algoController.addAlgo');
-  }
-};
-
-const getAlgo = async (req, res) => {
-  try {
-    const totalAlgo = await pool.query('SELECT * FROM user_algorithms');
-    const completedAlgo = await pool.query(
-      'SELECT * FROM user_algorithms WHERE solved = true'
-    );
-    return res
-      .status(201)
-      .json({ total: totalAlgo.rowCount, completed: completedAlgo.rowCount });
-  } catch (err) {
-    console.log('Error adding algorithm: ', err);
-    return res.status(500).send('Server Error During algoController.addAlgo');
   }
 };
 

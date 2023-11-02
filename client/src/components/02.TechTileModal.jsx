@@ -20,9 +20,11 @@ const TechTileModal = ({
   setProText,
   setConText,
   setOpinionText,
+  setNotesText,
   proText,
   conText,
   opinionText,
+  notesText,
 }) => {
   const [tileTitle, setTileTitle] = useState(initialTileTitle || '');
 

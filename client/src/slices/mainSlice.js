@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { application } from 'express';
 
 export const fetchInfo = createAsyncThunk('main/ENDPOINT', async (data) => {
   try {

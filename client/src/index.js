@@ -36,10 +36,10 @@ export default function App() {
           path="/"
           element={<Login />}
         />
-        <Route
+        {/* <Route
           path="/test"
           element={<TestComponent />}
-        />
+        /> */}
 
         <Route
           path="/forgetpassword"

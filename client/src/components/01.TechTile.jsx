@@ -1,21 +1,33 @@
-import React, { FC, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Box, ResponsiveContext, Text } from 'grommet';
 import TechTileModal from './02.TechTileModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { storeTileInfo } from '../slices/mainSlice.js';
 
 const TechTile = ({ title, color, textStyle }) => {
+  const dispatch = useDispatch();
+  const { userSummary } = useSelector((state) => state.main);
   const size = useContext(ResponsiveContext);
   const [showModal, setShowModal] = useState(false);
   //* ! State variables for each Text Area
   const [proText, setProText] = useState('');
   const [conText, setConText] = useState('');
   const [opinionText, setOpinionText] = useState('');
+  const [notesText, setNotesText] = useState('');
 
   const openModal = () => setShowModal(true);
   const closeModal = () => {
-    /**
-     * todo: API Calls to Store Payload
-     */
-    console.log(proText);
+    const userID = userSummary.algorithms[0].userId;
+    const payload = {
+      userId: userID,
+      technology: title,
+      pros: proText,
+      cons: conText,
+      opinion: opinionText,
+      notes: notesText,
+      green: false,
+    };
+    dispatch(storeTileInfo(payload));
     setShowModal(false);
   };
 
@@ -66,6 +78,8 @@ const TechTile = ({ title, color, textStyle }) => {
           setConText={setConText}
           opinionText={opinionText}
           setOpinionText={setOpinionText}
+          notesText={notesText}
+          setNotesText={setNotesText}
         />
       )}
     </>
